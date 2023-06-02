@@ -1,0 +1,18 @@
+.BibleCard {
+    text-align: center;
+    background-color: #e4e4e4;
+    height: 100%;
+    /* ver si lo dejo asi o si quito heith porque se descuadran las lineas laterales */
+}
+
+.image {
+    height: 250px;
+    object-fit: cover;
+    padding: 10px;
+    border-radius: 8%;
+}
+
+.Buttons:hover {
+    background-color: #3c297b;
+    color: #F0E494;
+}
