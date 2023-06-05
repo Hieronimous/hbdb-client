@@ -4,22 +4,12 @@ import RegisterForm from '../../components/UserComponents/RegisterForm/RegisterF
 const RegisterPage = () => {
 
     return (
-
         <Container>
-
             <Row>
-
-                <Col md={{ offset: 3, span: 6 }}>
-
-                    <h1>Register</h1>
-
-                    <hr />
-
+                <Col md={{ offset: 1, span: 9 }}>
                     <RegisterForm />
-
                 </Col>
             </Row>
-
         </Container>
     )
 }

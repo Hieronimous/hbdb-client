@@ -19,9 +19,7 @@ const ProfilePage = () => {
 
     return (
         currentUser && <Container>
-
             < ProfileComponents user={currentUser} />
-
         </Container>
     )
 }

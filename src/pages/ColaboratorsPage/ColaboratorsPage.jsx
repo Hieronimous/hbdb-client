@@ -16,10 +16,12 @@ const ColaboratorsListPage = () => {
     const loadColaborators = () => {
         userService
             .getAllUsers()
-            .then(({ data }) => setColaborators(data))
-            .catch(err => console.log(err))
+            .then(({ data }) => {
+                console.log(data)
+                const colaborators = data.filter(user => user.userRole.includes("Colaborator"));
+                setColaborators(colaborators);
+            })
     }
-
 
     return (
 

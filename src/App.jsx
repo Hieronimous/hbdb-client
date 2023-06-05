@@ -7,6 +7,7 @@ import Footer from './components/PagesComponents/Footer/Footer';
 function App() {
   return (
     <div className="App">
+
       <Navigation />
       <AppRoutes />
       <Footer />

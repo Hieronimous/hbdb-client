@@ -1,4 +1,4 @@
-.editUserForm {
+.RegisterForm {
     margin-bottom: 50px;
 }
 
@@ -6,17 +6,18 @@
     margin-right: -50px;
 }
 
+
+.cascading-right {
+    margin-right: 0;
+}
+
+
 .marginImage {
-    margin-top: 12%;
+    margin-left: 18px;
 
 }
 
 .Buttons:hover {
     background-color: #3c297b;
     color: #F0E494;
-}
-
-.imageCol {
-    margin-left: 10%;
-
 }

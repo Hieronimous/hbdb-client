@@ -7,53 +7,75 @@ import userService from "../../../services/user.services"
 const ProfileComponents = ({ user }) => {
 
     const navigate = useNavigate();
+
     const handledelete = event => {
         const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
         if (isConfirmed) {
 
             userService.deleteUser(user._id)
                 .then(() => {
-                    navigate(`/users`);
+                    navigate(`/register`);
                 })
                 .catch(err => console.log(err));
         }
     }
 
-    console.log("role", user)
 
     return (
         <div>
             <Container>
                 <h1>Welcome {user.username}!</h1>
                 <hr />
-                <Row>
-                    <Col md={{ span: 3 }} >
-                        {user && <img className="userAvatar" src={user.avatar} alt="avatar" />}
-                    </Col>
+                <div>
+                    <Row>
+                        <Col md={{ span: 5 }} className="personalInfo">
+                            {user && <img className="userAvatar" src={user.avatar} alt=" avatar" />}
+                        </Col>
 
-                    <Col md={{ span: 6 }}>
-                        <hr />
-                        <h4><b>First name: </b>{user.firstName}</h4>
-                        <h4><b>Last name: </b>{user.lastName}</h4>
-                        <h4><b>Email: </b>{user.email}</h4>
+                        <Col md={{ span: 6 }} className="personalInfo2">
+                            <h4><b>Your personal information</b></h4>
+                            <hr />
 
-                        {user.userRole == "Colaborator" && <>
-                            <h4><b>Institution: </b>{user.currentInstitution}</h4>
-                            <Button className="Buttons" as={Link} to={`/mycolaborations`} variant="warning">My colaborations</Button>{' '}</>}
-                        <hr />
+                            <h4><b>First name: </b>{user.firstName}</h4>
+                            <h4><b>Last name: </b>{user.lastName}</h4>
+                            <h4><b>Email: </b>{user.email}</h4>
 
-                        <Button className="Buttons" as={Link} to={`/favorites`} variant="warning">Favorites Bibles</Button>{' '}
-                        <hr />
-                        <Button className="Buttons" as={Link} to={`/editProfile/${user._id}`} variant="secondary">Edit profile</Button>{' '}
-                        <Button className="Buttons" variant="danger" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}
-                    </Col>
-                </Row>
-                <br />
-            </Container>
+                            {user.userRole == "Colaborator" && <>
+                                <h4><b>Institution: </b>{user.currentInstitution}</h4>
+                                {/* arreglar */}
+                                <hr /></>}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={{ span: 12 }} className="d-flex justify-content-center">
+                            {user.userRole == "Colaborator" && <>
 
-            <Button className="Buttons" variant="outline-secondary" as={Link} to={`/`}  >Return</Button>{' '}
+                                <Button className="Buttons" as={Link} to={`/new-entry`} variant="warning">New entry</Button>{' '}
+                                <Button className="Buttons" as={Link} to={`/mycolaborations`} variant="warning">My colaborations</Button>{' '}</>}
+                            <Button className="Buttons" as={Link} to={`/favorites`} variant="warning">Favorites Bibles</Button>{' '}
+                            <Button className="Buttons" as={Link} to={`/editProfile/${user._id}`} variant="warning">Edit my profile</Button>{' '}
+
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={{ span: 12 }} className="d-flex justify-content-center">
+                            {user && <>
+
+                                <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
+                            <Button className="Buttons" variant="outline-light" as={Link} to={`/`}  >Return</Button>{' '}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="d-flex justify-content-center decorationLog"  >
+                            <img
+                                src='https://64.media.tumblr.com/d0d09cf6c510de0365a62d2ba6c48b8b/e73b224adcc65676-bd/s400x600/5cfc1e21d1ccdab4b19aa7dac46380e0d6e620c9.jpg'
+                                alt='marginImage'
+                            />
+                        </Col>
+                    </Row>
+                </div>
+            </Container >
         </div >
     )
 }
-
 export default ProfileComponents

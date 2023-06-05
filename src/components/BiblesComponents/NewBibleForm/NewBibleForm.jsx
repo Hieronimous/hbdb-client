@@ -4,7 +4,7 @@ import './NewBibleForm.css'
 import biblesService from '../../../services/bibles.services'
 import { useNavigate, Link } from 'react-router-dom'
 import uploadServices from '../../../services/upload.services'
-
+import data from './../../../assets/CountriesandCities.json'
 
 const NewBibleForm = () => {
 
@@ -52,28 +52,36 @@ const NewBibleForm = () => {
         ancientShelfmark: '',
         laterAnnotations: '',
         references: '',
-        microfilmDigitalCopy: '',
+        nliFilmNumber: '',
         publishedEdition: '',
         bibliography: '',
         contents: '',
         locationCountry: '',
         locationCity: '',
-        locationDetails: '',
 
     })
+    const [step, setStep] = useState(1);
 
-    const languagesSelect = ["", "Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Aramaic & vernacular"]
-    const formatSelect = ["", "Codex", "Scroll", "Fragment"]
-    const centurySelect = ["", "Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
-    const scriptGeoculturalAreaSelect = ["", "Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"]
+    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Aramaic & vernacular"]
+    const formatSelect = ["Codex", "Scroll", "Fragment"]
+    const centurySelect = ["Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
+    const scriptGeoculturalAreaSelect = ["Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"]
 
     const [loadingImage, setLoadingImage] = useState(false)
+
+
+
+    const countries = [...new Set(data.map((item) => item.locationCountry))];
+    const filteredCities = data.filter(
+        (item) => item.locationCountry === bibleData.locationCountry
+    );
 
     const handleInputChange = event => {
         const { name, value } = event.target
         setBibleData({ ...bibleData, [name]: value })
     }
     const navigate = useNavigate();
+
 
     const handleSubmit = event => {
 
@@ -86,7 +94,6 @@ const NewBibleForm = () => {
             .then(() => { })
             .catch(err => console.log(err))
     }
-
     const handleFileUpload = event => {
 
         const formData = new FormData()
@@ -104,257 +111,603 @@ const NewBibleForm = () => {
             })
 
     }
+
+    const validateFields = () => {
+        let requiredFields = [];
+        let isValid = true;
+
+        if (step === 1) {
+            requiredFields = ['title', 'bibliotheca', 'format', 'scriptGeoculturalArea', 'century', 'shelfmark', 'language'];
+        }
+
+        if (step === 3) {
+            requiredFields = ['locationCountry', 'locationCity'];
+        }
+
+        requiredFields.forEach(field => {
+            if (!bibleData[field]) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            alert('Please complete all the required fields');
+        } else {
+            handleNext();
+        }
+    };
+
+    const handleNext = () => {
+        setStep(step + 1);
+    };
+
+    const handlePrev = () => {
+        setStep(step - 1);
+    };
+
     return (
-        <div className='form'>
+        <div className="form">
             <Form onSubmit={handleSubmit}>
-                <Container>
-                    <Row>
-                        <Col>
-                            <Form.Group className="mb-3" controlId="title">
-                                <Form.Label>Bible Title</Form.Label>
-                                <Form.Control type="text" value={bibleData.title} onChange={handleInputChange} name="title" />
-                                {/* <Form.Text className="text-muted">
-                                    fields is required.
-                                </Form.Text> */}
-                            </Form.Group>
+                {step === 1 && (
+                    <Container>
+                        <Row>
+                            <Col><h2>Identification</h2></Col>
+                            <Col className="d-flex justify-content-end"><h5><p className='dot'>*</p> required fields</h5></Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="title">
+                                    <Form.Label>Bible Title<p className='dot'>*</p></Form.Label>
+                                    <Form.Control type="text" value={bibleData.title} onChange={handleInputChange} name="title" required />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="bibliotheca">
+                                    <Form.Label>Library<p className='dot'>*</p></Form.Label>
+                                    <Form.Control type="text" value={bibleData.bibliotheca} onChange={handleInputChange} name="bibliotheca" required />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="format">
+                                    <Form.Label>Format<p className='dot'>*</p></Form.Label>
+                                    <Form.Control as="select" value={bibleData.format} onChange={handleInputChange} name="format" defaultValue='Codex' required>
+                                        <option value="" disabled>Select</option>
+                                        {formatSelect.map((option, index) => (
+                                            <option key={index} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="scriptGeoculturalArea">
+                                    <Form.Label>Script Geocultural Area<p className='dot'>*</p></Form.Label>
+                                    <Form.Control as="select" value={bibleData.scriptGeoculturalArea} onChange={handleInputChange} name="scriptGeoculturalArea" defaultValue="" required>
+                                        <option value="" disabled>Select</option>
+                                        {scriptGeoculturalAreaSelect.map((option, index) => (
+                                            <option key={index} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="century">
+                                    <Form.Label>Century<p className='dot'>*</p></Form.Label>
+                                    <Form.Control as="select" value={bibleData.century} onChange={handleInputChange} name="century" defaultValue="Unknown" required>
+                                        <option value="" disabled>Select</option>
+                                        {centurySelect.map((option, index) => (
+                                            <option key={index} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="shelfmark">
+                                    <Form.Label>Shelfmark<p className='dot'>*</p></Form.Label>
+                                    <Form.Control type="text" value={bibleData.shelfmark} onChange={handleInputChange} name="shelfmark" required />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="image">
+                                    <Form.Label>Bible Image</Form.Label>
+                                    <Form.Control type="file" onChange={handleFileUpload} />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <br />
+                        <h2>Production</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="language">
+                                    <Form.Label>Language<p className='dot'>*</p></Form.Label>
+                                    <Form.Control as="select" value={bibleData.language} placeholder='Select' onChange={handleInputChange} name="language" defaultValue='Hebrew' required>
+                                        <option value="" disabled>Select</option>
+                                        {languagesSelect.map((option, index) => (
+                                            <option key={index} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="topic">
+                                    <Form.Label>Topic</Form.Label>
+                                    <Form.Control type="text" value={bibleData.topic} onChange={handleInputChange} name="topic" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Form.Group className="mb-3" controlId="noteToTitle">
                                 <Form.Label>Note to title</Form.Label>
                                 <Form.Control type="text" value={bibleData.noteToTitle} onChange={handleInputChange} name="noteToTitle" />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="bibliotheca">
-                                <Form.Label>Library</Form.Label>
-                                <Form.Control type="text" value={bibleData.bibliotheca} onChange={handleInputChange} name="bibliotheca" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="shelfmark">
-                                <Form.Label>Shelfmark</Form.Label>
-                                <Form.Control type="text" value={bibleData.shelfmark} onChange={handleInputChange} name="shelfmark" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="image">
-                                <Form.Label>Bible Image</Form.Label>
-                                <Form.Control type="file" onChange={handleFileUpload} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="digitLink">
-                                <Form.Label>Link to Digitization</Form.Label>
-                                <Form.Control type="text" value={bibleData.digitLink} onChange={handleInputChange} name="digitLink" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="language">
-                                <Form.Label>Language</Form.Label>
-                                <Form.Control as="select" value={bibleData.language} onChange={handleInputChange} name="language" defaultValue='Hebrew' required>
-                                    {languagesSelect.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="format">
-                                <Form.Label>Format</Form.Label>
-                                <Form.Control as="select" value={bibleData.format} onChange={handleInputChange} name="format" defaultValue='Codex' required>
-                                    {formatSelect.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="responsiblePerson">
-                                <Form.Label>Responsible Person</Form.Label>
-                                <Form.Control type="text" value={bibleData.responsiblePerson} onChange={handleInputChange} name="responsiblePerson" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="date">
-                                <Form.Label>Date</Form.Label>
-                                <Form.Control type="text" value={bibleData.date} onChange={handleInputChange} name="date" />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group className="mb-3" controlId="century">
-                                <Form.Label>Century</Form.Label>
-                                <Form.Control as="select" value={bibleData.century} onChange={handleInputChange} name="century" defaultValue="Unknown" required>
-                                    {centurySelect.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="numberOfFolios">
-                                <Form.Label>Number of folios</Form.Label>
-                                <Form.Control type="text" value={bibleData.numberOfFolios} onChange={handleInputChange} name="numberOfFolios" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="textDistribution">
-                                <Form.Label>Text distribution</Form.Label>
-                                <Form.Control type="text" value={bibleData.textDistribution} onChange={handleInputChange} name="textDistribution" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="material">
-                                <Form.Label>Material</Form.Label>
-                                <Form.Control type="text" value={bibleData.material} onChange={handleInputChange} name="material" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="specialWritingFeatures">
-                                <Form.Label>Special writing features</Form.Label>
-                                <Form.Control type="text" value={bibleData.specialWritingFeatures} onChange={handleInputChange} name="specialWritingFeatures" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="decoration">
-                                <Form.Label>Decoration</Form.Label>
-                                <Form.Control type="text" value={bibleData.decoration} onChange={handleInputChange} name="decoration" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="decorationDetails">
-                                <Form.Label>Decoration details</Form.Label>
-                                <Form.Control type="text" value={bibleData.decorationDetails} onChange={handleInputChange} name="decorationDetails" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="measurements">
-                                <Form.Label>Measurements</Form.Label>
-                                <Form.Control type="text" value={bibleData.measurements} onChange={handleInputChange} name="measurements" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="topic">
-                                <Form.Label>Topic</Form.Label>
-                                <Form.Control type="text" value={bibleData.topic} onChange={handleInputChange} name="topic" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="script">
-                                <Form.Label>Script</Form.Label>
-                                <Form.Control type="text" value={bibleData.script} onChange={handleInputChange} name="script" />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group className="mb-3" controlId="scriptGeoculturalArea">
-                                <Form.Label>Script Geocultural Area</Form.Label>
-                                <Form.Control as="select" value={bibleData.scriptGeoculturalArea} onChange={handleInputChange} name="scriptGeoculturalArea" defaultValue={"Unknown"} required>
-                                    {scriptGeoculturalAreaSelect.map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="incipit">
-                                <Form.Label>Incipit</Form.Label>
-                                <Form.Control type="text" value={bibleData.incipit} onChange={handleInputChange} name="incipit" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="explicit">
-                                <Form.Label>Explicit</Form.Label>
-                                <Form.Control type="text" value={bibleData.explicit} onChange={handleInputChange} name="explicit" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="writingPlace">
-                                <Form.Label>Writing place</Form.Label>
-                                <Form.Control type="text" value={bibleData.writingPlace} onChange={handleInputChange} name="writingPlace" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="scribe">
-                                <Form.Label>Scribe</Form.Label>
-                                <Form.Control type="text" value={bibleData.scribe} onChange={handleInputChange} name="scribe" />
-                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="date">
+                                    <Form.Label>Date</Form.Label>
+                                    <Form.Control type="text" value={bibleData.date} onChange={handleInputChange} name="date" />
+                                </Form.Group>
+
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="writingPlace">
+                                    <Form.Label>Writing place</Form.Label>
+                                    <Form.Control type="text" value={bibleData.writingPlace} onChange={handleInputChange} name="writingPlace" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="responsiblePerson">
+                                    <Form.Label>Responsible Person</Form.Label>
+                                    <Form.Control type="text" value={bibleData.responsiblePerson} onChange={handleInputChange} name="responsiblePerson" />
+                                    <Form.Text className="text-muted">
+                                        Author of any other text acompanying the bible
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="scribe">
+                                    <Form.Label>Scribe</Form.Label>
+                                    <Form.Control type="text" value={bibleData.scribe} onChange={handleInputChange} name="scribe" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Form.Group className="mb-3" controlId="colophon">
                                 <Form.Label>Colophon</Form.Label>
-                                <Form.Control type="text" value={bibleData.colophon} onChange={handleInputChange} name="colophon" />
+                                <Form.Control type="text" as="textarea"
+                                    rows={4} value={bibleData.colophon} onChange={handleInputChange} name="colophon" />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="textSpecialFeatures">
-                                <Form.Label>Text special features</Form.Label>
-                                <Form.Control type="text" value={bibleData.textSpecialFeatures} onChange={handleInputChange} name="textSpecialFeatures" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="quireType">
-                                <Form.Label>Quire type</Form.Label>
-                                <Form.Control type="text" value={bibleData.quireType} onChange={handleInputChange} name="quireType" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="conservation">
-                                <Form.Label>Conservation</Form.Label>
-                                <Form.Control type="text" value={bibleData.conservation} onChange={handleInputChange} name="conservation" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="blankFolios">
-                                <Form.Label>Blank folios</Form.Label>
-                                <Form.Control type="text" value={bibleData.blankFolios} onChange={handleInputChange} name="blankFolios" />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group className="mb-3" controlId="damageFolios">
-                                <Form.Label>Damage folios</Form.Label>
-                                <Form.Control type="text" value={bibleData.damageFolios} onChange={handleInputChange} name="damageFolios" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="mutilatedFolios">
-                                <Form.Label>Mutilated folios</Form.Label>
-                                <Form.Control type="text" value={bibleData.mutilatedFolios} onChange={handleInputChange} name="mutilatedFolios" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="foliation">
-                                <Form.Label>Foliation</Form.Label>
-                                <Form.Control type="text" value={bibleData.foliation} onChange={handleInputChange} name="foliation" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="catchwords">
-                                <Form.Label>Catchwords</Form.Label>
-                                <Form.Control type="text" value={bibleData.catchwords} onChange={handleInputChange} name="catchwords" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="quireSignatures">
-                                <Form.Label>Quire signatures</Form.Label>
-                                <Form.Control type="text" value={bibleData.quireSignatures} onChange={handleInputChange} name="quireSignatures" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="ruling">
-                                <Form.Label>Ruling</Form.Label>
-                                <Form.Control type="text" value={bibleData.ruling} onChange={handleInputChange} name="ruling" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="watermarks">
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <div>
+                                    <Button variant="outline-secondary" as={Link} to={`/bibles`}> Cancel</Button>
+                                </div>
+                            </Col>
+                            <Col className="d-flex justify-content-end">
+                                <Button variant="warning" onClick={validateFields}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row >
+                            <Col className="d-flex justify-content-center">
+                                <h4>1/4</h4>
+                            </Col>
+                        </Row>
+                    </Container >
+                )}
+                {step === 2 && (
+                    <Container >
+                        <h2>Codicology</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="measurements">
+                                    <Form.Label>Measurements</Form.Label>
+                                    <Form.Control type="text" value={bibleData.measurements} onChange={handleInputChange} name="measurements" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="material">
+                                    <Form.Label>Material</Form.Label>
+                                    <Form.Control type="text" value={bibleData.material} onChange={handleInputChange} name="material" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="numberOfFolios">
+                                    <Form.Label>Number of folios</Form.Label>
+                                    <Form.Control type="text" value={bibleData.numberOfFolios} onChange={handleInputChange} name="numberOfFolios" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="foliation">
+                                    <Form.Label>Foliation</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.foliation} onChange={handleInputChange} name="foliation" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="script">
+                                    <Form.Label>Script</Form.Label>
+                                    <Form.Control type="text" value={bibleData.script} onChange={handleInputChange} name="script" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="specialWritingFeatures">
+                                    <Form.Label>Special writing features</Form.Label>
+                                    <Form.Control type="text" value={bibleData.specialWritingFeatures} onChange={handleInputChange} name="specialWritingFeatures" />
+                                    <Form.Text className="text-muted">
+                                        Presence of vowels, accents and/or masora
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="textDistribution">
+                                    <Form.Label>Text distribution</Form.Label>
+                                    <Form.Control type="text" value={bibleData.textDistribution} onChange={handleInputChange} name="textDistribution" />
+                                    <Form.Text className="text-muted">
+                                        Number of columns and lines per column
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="quireType">
+                                    <Form.Label>Quire type</Form.Label>
+                                    <Form.Control type="text" value={bibleData.quireType} onChange={handleInputChange} name="quireType" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="catchwords">
+                                    <Form.Label>Catchwords</Form.Label>
+                                    <Form.Control type="text" value={bibleData.catchwords} onChange={handleInputChange} name="catchwords" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="textSpecialFeatures">
+                                    <Form.Label>Text special features</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.textSpecialFeatures} onChange={handleInputChange} name="textSpecialFeatures" />
+                                    <Form.Text className="text-muted">
+                                        Arrangement of poetic sections and masora
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="quireSignatures">
+                                    <Form.Label>Quire signatures</Form.Label>
+                                    <Form.Control type="text" value={bibleData.quireSignatures} onChange={handleInputChange} name="quireSignatures" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="ruling">
+                                    <Form.Label>Ruling</Form.Label>
+                                    <Form.Control type="text" value={bibleData.ruling} onChange={handleInputChange} name="ruling" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>  <Form.Group className="mb-3" controlId="watermarks">
                                 <Form.Label>Watermarks</Form.Label>
                                 <Form.Control type="text" value={bibleData.watermarks} onChange={handleInputChange} name="watermarks" />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="binding">
-                                <Form.Label>Binding</Form.Label>
-                                <Form.Control type="text" value={bibleData.binding} onChange={handleInputChange} name="binding" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="provenance">
-                                <Form.Label>Provenance</Form.Label>
-                                <Form.Control type="text" value={bibleData.provenance} onChange={handleInputChange} name="provenance" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="arrivalToLibrary">
-                                <Form.Label>Arrival to library</Form.Label>
-                                <Form.Control type="text" value={bibleData.arrivalToLibrary} onChange={handleInputChange} name="arrivalToLibrary" />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group className="mb-3" controlId="ancientShelfmark">
-                                <Form.Label>Ancient shelfmark</Form.Label>
-                                <Form.Control type="text" value={bibleData.ancientShelfmark} onChange={handleInputChange} name="ancientShelfmark" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="laterAnnotations">
-                                <Form.Label>Later annotations</Form.Label>
-                                <Form.Control type="text" value={bibleData.laterAnnotations} onChange={handleInputChange} name="laterAnnotations" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="references">
-                                <Form.Label>References</Form.Label>
-                                <Form.Control type="text" value={bibleData.references} onChange={handleInputChange} name="references" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="microfilmDigitalCopy">
-                                <Form.Label>Microfilm digital copy</Form.Label>
-                                <Form.Control type="text" value={bibleData.microfilmDigitalCopy} onChange={handleInputChange} name="microfilmDigitalCopy" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="publishedEdition">
-                                <Form.Label>Published edition</Form.Label>
-                                <Form.Control type="text" value={bibleData.publishedEdition} onChange={handleInputChange} name="publishedEdition" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="bibliography">
-                                <Form.Label>Bibliography</Form.Label>
-                                <Form.Control type="text" value={bibleData.bibliography} onChange={handleInputChange} name="bibliography" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="contents">
-                                <Form.Label>Contents</Form.Label>
-                                <Form.Control type="text" value={bibleData.contents} onChange={handleInputChange} name="contents" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="locationCountry">
-                                <Form.Label>Location country</Form.Label>
-                                <Form.Control type="text" value={bibleData.locationCountry} onChange={handleInputChange} name="locationCountry" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="locationCity">
-                                <Form.Label>Location city</Form.Label>
-                                <Form.Control type="text" value={bibleData.locationCity} onChange={handleInputChange} name="locationCity" />
-                            </Form.Group>
-                        </Col>
-                    </Row>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="blankFolios">
+                                    <Form.Label>Blank folios</Form.Label>
+                                    <Form.Control type="text" value={bibleData.blankFolios} onChange={handleInputChange} name="blankFolios" />
+                                </Form.Group></Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <div>
+                                    <Button variant="outline-secondary" as={Link} to={`/bibles`}> Cancel</Button>
+                                </div>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                                <Button variant="secondary" onClick={handlePrev}>
+                                    Previous
+                                </Button>
+                            </Col>
+                            <Col className="d-flex justify-content-end">
+                                <Button variant="warning" onClick={handleNext}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row >
+                            <Col className="d-flex justify-content-center">
+                                <h4>2/4</h4>
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
+                {step === 3 && (
+                    <Container>
+                        <h2>Text</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="incipit">
+                                    <Form.Label>Incipit</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={3} value={bibleData.incipit} onChange={handleInputChange} name="incipit" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="explicit">
+                                    <Form.Label>Explicit</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={3} value={bibleData.explicit} onChange={handleInputChange} name="explicit" />
+                                </Form.Group></Col>
+                        </Row>
 
-                    <div className='d-grid'>
-                        <Button variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Crate'}</Button>
-                    </div>
-                    <hr />
-                    <div>
-                        <Button variant="outline-secondary" as={Link} to={`/bibles`}> Cancel</Button>
-                    </div>
-                </Container>
+                        <br />
+                        <h2>Location</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="locationCountry" require>
+                                    <Form.Label>Country<p className='dot'>*</p></Form.Label>
+                                    <Form.Select
+                                        value={bibleData.locationCountry}
+                                        onChange={handleInputChange}
+                                        name="locationCountry"
+                                    >
+                                        <option value="">Select Country</option>
+                                        {countries.map((country) => (
+                                            <option key={country} value={country}>
+                                                {country}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="locationCity" require>
+                                    <Form.Label>City<p className='dot'>*</p></Form.Label>
+                                    <Form.Select
+                                        value={bibleData.locationCity}
+                                        onChange={handleInputChange}
+                                        name="locationCity"
+                                    >
+                                        <option value="">Select City</option>
+                                        {filteredCities.map((item) => (
+                                            <option key={item.locationCity} value={item.locationCity}>
+                                                {item.locationCity}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <h2>History</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="binding">
+                                    <Form.Label>Binding</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.binding} onChange={handleInputChange} name="binding" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="conservation">
+                                    <Form.Label>Conservation</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.conservation} onChange={handleInputChange} name="conservation" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="damageFolios">
+                                    <Form.Label>Damage folios</Form.Label>
+                                    <Form.Control type="text" value={bibleData.damageFolios} onChange={handleInputChange} name="damageFolios" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="mutilatedFolios">
+                                    <Form.Label>Mutilated folios</Form.Label>
+                                    <Form.Control type="text" value={bibleData.mutilatedFolios} onChange={handleInputChange} name="mutilatedFolios" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="provenance">
+                                    <Form.Label>Provenance</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.provenance} onChange={handleInputChange} name="provenance" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="arrivalToLibrary">
+                                    <Form.Label>Arrival to library</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.arrivalToLibrary} onChange={handleInputChange} name="arrivalToLibrary" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="ancientShelfmark">
+                                    <Form.Label>Ancient shelfmark</Form.Label>
+                                    <Form.Control type="text" value={bibleData.ancientShelfmark} onChange={handleInputChange} name="ancientShelfmark" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="laterAnnotations">
+                                    <Form.Label>Later annotations</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.laterAnnotations} onChange={handleInputChange} name="laterAnnotations" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <div>
+                                    <Button variant="outline-secondary" as={Link} to={`/bibles`}> Cancel</Button>
+                                </div>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                                <Button variant="secondary" onClick={handlePrev}>
+                                    Previous
+                                </Button>
+                            </Col>
+                            <Col className="d-flex justify-content-end">
+                                <Button variant="warning" onClick={validateFields}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row >
+                            <Col className="d-flex justify-content-center">
+                                <h4>3/4</h4>
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
+                {step === 4 && (
+                    <Container>
+                        <br />
+                        <h2>Decoration</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="decoration">
+                                    <Form.Label>Decoration</Form.Label>
+                                    <Form.Control type="text" value={bibleData.decoration} onChange={handleInputChange} name="decoration" />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="decorationDetails">
+                                    <Form.Label>Decoration details</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={3} value={bibleData.decorationDetails} onChange={handleInputChange} name="decorationDetails" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <h2>References</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="references">
+                                    <Form.Label>References</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.references} onChange={handleInputChange} name="references" />
+                                    <Form.Text className="text-muted">
+                                        Previous manuscript descriptions
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="publishedEdition">
+                                    <Form.Label>Published edition</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={4} value={bibleData.publishedEdition} onChange={handleInputChange} name="publishedEdition" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+
+                            <Col>
+                                <Form.Group className="mb-3" controlId="nliFilmNumber">
+                                    <Form.Label>NLI Film number</Form.Label>
+                                    <Form.Control type="text" value={bibleData.nliFilmNumber} onChange={handleInputChange} name="nliFilmNumber" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="digitLink">
+                                    <Form.Label>Link to Digitization</Form.Label>
+                                    <Form.Control type="text" value={bibleData.digitLink} onChange={handleInputChange} name="digitLink" />
+                                    <Form.Text className="text-muted">
+                                        Complete URL to digitization
+                                    </Form.Text>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="bibliography">
+                                    <Form.Label>Bibliography</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={5} value={bibleData.bibliography} onChange={handleInputChange} name="bibliography" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <h2>Contents</h2>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3" controlId="contents">
+                                    <Form.Label>Contents</Form.Label>
+                                    <Form.Control type="text" as="textarea"
+                                        rows={2} value={bibleData.contents} onChange={handleInputChange} name="contents" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <hr />
+                        <Row>
+                            <Col>
+                                <div>
+                                    <Button variant="outline-secondary" as={Link} to={`/bibles`}> Cancel</Button>
+                                </div>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                                <Button variant="secondary" onClick={handlePrev}>
+                                    Previous
+                                </Button>
+                            </Col>
+                            <Col>
+                                <div className='d-grid'>
+                                    <Button variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Edit'}</Button>
+                                </div>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row >
+                            <Col className="d-flex justify-content-center">
+                                <h4>4/4</h4>
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
             </Form>
-
         </div>
+
     )
 }
 

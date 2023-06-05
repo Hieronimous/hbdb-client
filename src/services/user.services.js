@@ -31,6 +31,10 @@ class UserService {
         return this.api.put(`/editProfile/${user_id}`, userData)
     }
 
+    addfav(user_id, bible_id) {
+        return this.api.put(`/favorite/${user_id}/${bible_id}`)
+    }
+
     deleteUser(user_id) {
         return this.api.delete(`/deleteUser/${user_id}`)
     }

@@ -23,7 +23,7 @@ const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeocultur
             biblesService
                 .deleteBible(_id)
                 .then(() => {
-                    navigate(`/bibles`);
+                    navigate(`/bibles`); // noredirige arreglar
                     // TODO: ACTUALIZAR LA LISTA DE BIBLIAS MEDIANTE EL loadBibles() DEL PADRE
                 })
                 .catch(err => console.log(err));

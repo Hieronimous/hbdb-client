@@ -1,0 +1,21 @@
+.filtering-options {
+    background-color: #f2ebaa;
+}
+
+.title {
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+.Header {
+    background-color: blueviolet;
+}
+
+.accordion {
+    margin-top: 50px;
+}
+
+span {
+    color: rgb(97, 4, 123);
+    font-size: 25px;
+}

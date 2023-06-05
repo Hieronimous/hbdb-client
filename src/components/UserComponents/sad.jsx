@@ -1,34 +1,19 @@
-import { useState, useEffect, useContext } from "react"
+import { useState } from "react"
 import { Form, Button, Container, Col, Row } from "react-bootstrap"
-import { useNavigate, useParams } from "react-router-dom"
+import authService from './../../../services/auth.services'
+import { useNavigate } from "react-router-dom"
+import './RegisterForm.css'
 import uploadServices from "../../../services/upload.services"
-import userService from "../../../services/user.services"
-import { AuthContext } from "../../../contexts/auth.context"
-import './EditUserForm.css'
+import React from 'react';
 
 
-const UserEditForm = ({ }) => {
+const RegisterForm = ({ }) => {
 
-    const { user_id } = useParams();
-    const { storeToken, authenticateUser } = useContext(AuthContext)
-    const [userData, setUserData] = useState({
-        username: '', email: '', firstName: '', lastName: '', userRole: '', avatar: '', currentInstitution: ''
+    const [registerData, setRegisterdata] = useState({
+        username: '', email: '', password: '', firstName: '', lastName: '', userRole: '', currentInstitution: '', avatar: ''
     })
 
-    const { username, email, firstName, lastName, userRole, currentInstitution } = userData
     const roleSelect = ["", "Visitor", "Colaborator"]
-    useEffect(() => {
-        loadUser()
-    }, [user_id])
-
-    const loadUser = () => {
-        userService
-            .getOneUser(user_id)
-            .then(response => {
-                setUserData(response.data);
-            })
-            .catch(err => console.log(err));
-    }
 
     const [loadingImage, setLoadingImage] = useState(false)
 
@@ -36,23 +21,18 @@ const UserEditForm = ({ }) => {
 
     const handleInputChange = e => {
         const { value, name } = e.target
-        setUserData({ ...userData, [name]: value })
+        setRegisterdata({ ...registerData, [name]: value })
     }
 
     const handleSubmit = event => {
         event.preventDefault()
+        setLoadingImage(true)
 
-        userService
-            .editUser(user_id, userData)
-            .then(({ data }) => {
-                storeToken(data.authToken)
-                authenticateUser()
-                navigate('/profile')
-            })
+        authService
+            .signup(registerData)
+            .then(({ data }) => navigate('/login'))
             .catch(err => console.log(err))
     }
-
-
     const handleFileUpload = event => {
 
         const formData = new FormData()
@@ -63,17 +43,19 @@ const UserEditForm = ({ }) => {
             .uploadImage(formData)
             .then(res => {
                 console.log(res)
-                setUserData({ ...userData, avatar: res.data.cloudinary_url })
+                setRegisterdata({ ...registerData, avatar: res.data.cloudinary_url })
                 setLoadingImage(false)
             })
             .catch(err => {
                 console.log(err)
                 setLoadingImage(false)
             })
+
     }
+    const { username, email, password, firstName, lastName, userRole, currentInstitution } = registerData
 
     return (
-        <div className="editUserForm">
+        <div className="RegisterForm">
             <Container fluid className='mt-5' onSubmit={handleSubmit}>
                 <section className='text-center text-lg-start'>
                     <div className='container py-2'>
@@ -85,7 +67,7 @@ const UserEditForm = ({ }) => {
                                     style={{ background: 'hsla(0, 0%, 100%, 0.55)', backdropFilter: 'blur(30px)' }}
                                 >
                                     <div className='card-body p-5 shadow-5 text-center'>
-                                        <h2 className='fw-bold mb-5'>Edit profile</h2>
+                                        <h2 className='fw-bold mb-5'>Sign up now</h2>
                                         <form>
                                             <Col>
                                                 <Form.Group className="mb-3" controlId="username">
@@ -93,6 +75,7 @@ const UserEditForm = ({ }) => {
                                                     <Form.Control type="text" value={username} onChange={handleInputChange} name="username" />
                                                 </Form.Group>
                                             </Col>
+
                                             <Row className='mb-4'>
 
 
@@ -102,10 +85,6 @@ const UserEditForm = ({ }) => {
                                                         <Form.Control type="text" value={firstName} onChange={handleInputChange} name="firstName" />
                                                     </Form.Group>
                                                 </Col>
-                                                <Form.Group className="mb-3" controlId="image" required>
-                                                    <Form.Label>Profile Image</Form.Label>
-                                                    <Form.Control type="file" onChange={handleFileUpload} />
-                                                </Form.Group>
                                                 <Col>
                                                     <Form.Group className="mb-3" controlId="lastName">
                                                         <Form.Label>Last Name</Form.Label>
@@ -113,10 +92,16 @@ const UserEditForm = ({ }) => {
                                                     </Form.Group>
                                                 </Col>
                                             </Row>
+
                                             <Form.Group className="mb-3" controlId="email">
                                                 <Form.Label>Email</Form.Label>
                                                 <Form.Control type="email" value={email} onChange={handleInputChange} name="email" />
                                             </Form.Group>
+                                            <Form.Group className="mb-3" controlId="password">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
+                                            </Form.Group>
+
                                             <Form.Group className="mb-3" controlId="userRole">
                                                 <Form.Label>Visitor/Colaborator</Form.Label>
                                                 <Form.Control
@@ -125,7 +110,8 @@ const UserEditForm = ({ }) => {
                                                     onChange={handleInputChange}
                                                     name="userRole"
                                                     defaultValue="Visitor"
-                                                    required>
+                                                    required
+                                                >
                                                     {roleSelect.map((option, index) => (
                                                         <option key={index} value={option}>
                                                             {option}
@@ -133,15 +119,19 @@ const UserEditForm = ({ }) => {
                                                     ))}
                                                 </Form.Control>
                                             </Form.Group>
-
                                             {userRole === "Colaborator" && <>
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
                                                     <Form.Label>Current Institution</Form.Label>
                                                     <Form.Control type="text" value={currentInstitution} placeholder="Colaborator actual working institution" onChange={handleInputChange} name="currentInstitution" />
                                                 </Form.Group> </>}
+                                            <Form.Group className="mb-3" controlId="image" required>
+                                                <Form.Label>Profile Image</Form.Label>
+                                                <Form.Control type="file" onChange={handleFileUpload} />
+                                            </Form.Group>
+
 
                                             <div className='mb-4'>
-                                                <Button className="Buttons" variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Edit Profile'}</Button>
+                                                <Button className="Buttons" variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Sign Up'}</Button>
                                             </div>
                                         </form>
                                     </div>
@@ -162,7 +152,10 @@ const UserEditForm = ({ }) => {
                     </div>
                 </section>
             </Container>
+
+
+
         </div>
     )
 }
-export default UserEditForm
+export default RegisterForm
