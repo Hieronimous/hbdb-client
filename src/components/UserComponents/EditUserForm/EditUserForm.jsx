@@ -16,7 +16,7 @@ const UserEditForm = ({ }) => {
     })
 
     const { username, email, firstName, lastName, userRole, currentInstitution } = userData
-    const roleSelect = ["", "Visitor", "Colaborator"]
+    const roleSelect = ["", "Visitor", "Collaborator"]
     useEffect(() => {
         loadUser()
     }, [user_id])
@@ -118,7 +118,7 @@ const UserEditForm = ({ }) => {
                                                 <Form.Control type="email" value={email} onChange={handleInputChange} name="email" />
                                             </Form.Group>
                                             <Form.Group className="mb-3" controlId="userRole">
-                                                <Form.Label>Visitor/Colaborator</Form.Label>
+                                                <Form.Label>Visitor/Collaborator</Form.Label>
                                                 <Form.Control
                                                     as="select"
                                                     value={userRole}
@@ -134,10 +134,10 @@ const UserEditForm = ({ }) => {
                                                 </Form.Control>
                                             </Form.Group>
 
-                                            {userRole === "Colaborator" && <>
+                                            {userRole === "Collaborator" && <>
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
                                                     <Form.Label>Current Institution</Form.Label>
-                                                    <Form.Control type="text" value={currentInstitution} placeholder="Colaborator actual working institution" onChange={handleInputChange} name="currentInstitution" />
+                                                    <Form.Control type="text" value={currentInstitution} placeholder="Collaborator current institution" onChange={handleInputChange} name="currentInstitution" />
                                                 </Form.Group> </>}
 
                                             <div className='mb-4'>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import './BibleSearch'
+import './BibleSearch.css'
+
 
 const BibleSearch = ({ filterBibles }) => {
     const [searchQuery, setSearchQuery] = useState("");

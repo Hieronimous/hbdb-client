@@ -72,7 +72,7 @@ const BiblesFilter = ({ queriesFilter }) => {
         <>
             {
                 isLoading ?
-                    <Loader size="large" />
+                    <Loader />
                     :
                     <>
 

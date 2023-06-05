@@ -143,7 +143,7 @@ const RegisterForm = () => {
                                             </Form.Group>
 
                                             <Form.Group className="mb-3" controlId="userRole">
-                                                <Form.Label>Visitor/Colaborator</Form.Label>
+                                                <Form.Label>Visitor/Collaborator</Form.Label>
                                                 <Form.Control
                                                     as="select"
                                                     value={userRole}

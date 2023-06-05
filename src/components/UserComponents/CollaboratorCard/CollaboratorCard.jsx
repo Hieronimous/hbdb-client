@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { Card, ListGroup, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import userService from "../../../services/user.services";
 import { useNavigate, } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
-import "./ColaboratorCard.css"
+import "./CollaboratorCard.css"
 
-const ColaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstitution, _id }) => {
+const CollaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstitution, _id }) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
 
@@ -21,15 +21,14 @@ const ColaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstitu
                 .catch(err => console.log(err));
         }
     }
-    console.log(user)
 
     return (
         <>
-            <Card className="ColaboratorCard">
+            <Card className="CollaboratorCard">
                 <Card.Img className="image" variant="top" src={avatar} />
                 <Card.Body>
-                    <Card.Title><b>{firstName} {lastName}</b></Card.Title>
-                    <Card.Title><b>Institution: {currentInstitution}</b></Card.Title>
+                    <Card.Title><h3><b>{firstName} {lastName}</b></h3></Card.Title>
+                    <Card.Title><b>Institution: </b>{currentInstitution}</Card.Title>
                 </Card.Body>
 
                 <Card.Body>
@@ -43,4 +42,4 @@ const ColaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstitu
     )
 }
 
-export default ColaboratorCard
+export default CollaboratorCard

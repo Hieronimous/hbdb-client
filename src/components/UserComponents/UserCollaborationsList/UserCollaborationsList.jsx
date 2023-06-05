@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 import BibleCard from "../../BiblesComponents/BibleCard/BibleCard"
 
 
-const UserColaborationsList = ({ ownerBibles }) => {
+const UserCollaborationsList = ({ ownerBibles }) => {
 
     return (
         ownerBibles.map(elm =>
@@ -15,6 +15,6 @@ const UserColaborationsList = ({ ownerBibles }) => {
     )
 }
 
-export default UserColaborationsList
+export default UserCollaborationsList
 
 

@@ -71,7 +71,7 @@ const BiblesListPage = () => {
 
                 <Container>
                     <Row>
-                        <Col md={{ span: 6, offset: 5 }}>
+                        <Col md={{ span: 6, offset: 4 }}>
                             <BibleSearch filterBibles={filterBibles} />
                         </Col>
                     </Row>

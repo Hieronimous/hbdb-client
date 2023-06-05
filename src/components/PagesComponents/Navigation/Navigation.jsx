@@ -2,8 +2,8 @@ import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Navigation.css'
 import { AuthContext } from '../../../contexts/auth.context';
-import { useContext, useState, useEffect } from 'react';
-import userService from '../../../services/user.services';
+import { useContext } from 'react';
+
 
 const Navigation = () => {
 
@@ -27,7 +27,7 @@ const Navigation = () => {
                     <Nav className="me-auto">
                         <Link to="/" className='nav-link' >Home</Link>
                         <Link to="/bibles" className='nav-link' >The Collection</Link>
-                        {user && <Link to="/colaborators" className='nav-link' >Colaborators</Link>}
+                        {user && <Link to="/collaborators" className='nav-link' >Collaborators</Link>}
 
                     </Nav>
                     <Nav className="d-flex justify-content-end">

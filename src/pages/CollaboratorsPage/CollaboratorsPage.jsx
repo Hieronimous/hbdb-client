@@ -2,36 +2,36 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Button } from "react-bootstrap";
 import userService from "../../services/user.services";
-import ColaboratorList from "../../components/UserComponents/ColaboratorList/ColaboratorList";
+import CollaboratorList from "../../components/UserComponents/CollaboratorList/CollaboratorList";
 import Loader from "../../components/PagesComponents/Loader/Loader";
 
-const ColaboratorsListPage = () => {
+const CollaboratorsListPage = () => {
 
-    const [colaborators, setColaborators] = useState()
+    const [collaborators, setCollaborators] = useState()
 
     useEffect(() => {
-        loadColaborators()
+        loadCollaborators()
     }, [])
 
-    const loadColaborators = () => {
+    const loadCollaborators = () => {
         userService
             .getAllUsers()
             .then(({ data }) => {
                 console.log(data)
-                const colaborators = data.filter(user => user.userRole.includes("Colaborator"));
-                setColaborators(colaborators);
+                const collaborators = data.filter(user => user.userRole.includes("Collaborator"));
+                setCollaborators(collaborators);
             })
     }
 
     return (
 
-        !colaborators ? <Loader /> :
+        !collaborators ? <Loader /> :
             <div>
-                <h1 className="detailTitle">Our Colaborators</h1>
+                <h1 className="detailTitle">Our Collaborators</h1>
                 <hr />
                 <Container>
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        <ColaboratorList colaborators={colaborators} />
+                        <CollaboratorList collaborators={collaborators} />
                     </Row>
                     <hr />
                     < Link to="/" >
@@ -42,4 +42,4 @@ const ColaboratorsListPage = () => {
     )
 }
 
-export default ColaboratorsListPage
+export default CollaboratorsListPage

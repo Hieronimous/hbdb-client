@@ -19,6 +19,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetPage }) => {
         for (let i = 0; i < selectElements.length; i++) {
             selectElements[i].selectedIndex = 0;
         }
+        resetPage();
     }
 
     const handleCountryChange = (e) => {

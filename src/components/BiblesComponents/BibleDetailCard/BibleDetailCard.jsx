@@ -39,7 +39,7 @@ const BibleDetailCard = ({ bible }) => {
                         </Link>
 
                         {user._id === bible.owner && (
-                            <Link to="/mycolaborations">
+                            <Link to="/mycollaborations">
                                 <Button className="Buttons" variant="outline-warning">Return to my collaborations</Button>
                             </Link>
                         )}

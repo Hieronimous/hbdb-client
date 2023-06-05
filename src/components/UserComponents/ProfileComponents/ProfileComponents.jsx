@@ -8,17 +8,26 @@ const ProfileComponents = ({ user }) => {
 
     const navigate = useNavigate();
 
-    const handledelete = event => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
+    const handledelete = () => {
+        const isConfirmed = window.confirm('Are you sure you want to delete your profile?');
         if (isConfirmed) {
-
-            userService.deleteUser(user._id)
+            userService
+                .deleteUser(user._id)
                 .then(() => {
-                    navigate(`/register`);
+                    // Perform any necessary logout action here
+                    // Example: logoutUser();
+                    navigate('/');
                 })
                 .catch(err => console.log(err));
         }
-    }
+    };
+
+    // useEffect(() => {
+    //     // Perform any necessary cleanup action here
+    //     return () => {
+    //         // Example: resetUserState();
+    //     };
+    // }, []);
 
 
     return (
@@ -40,7 +49,7 @@ const ProfileComponents = ({ user }) => {
                             <h4><b>Last name: </b>{user.lastName}</h4>
                             <h4><b>Email: </b>{user.email}</h4>
 
-                            {user.userRole == "Colaborator" && <>
+                            {user.userRole == "Collaborator" && <>
                                 <h4><b>Institution: </b>{user.currentInstitution}</h4>
                                 {/* arreglar */}
                                 <hr /></>}
@@ -48,19 +57,18 @@ const ProfileComponents = ({ user }) => {
                     </Row>
                     <Row>
                         <Col md={{ span: 12 }} className="d-flex justify-content-center">
-                            {user.userRole == "Colaborator" && <>
+                            {user.userRole == "Collaborator" && <>
 
                                 <Button className="Buttons" as={Link} to={`/new-entry`} variant="warning">New entry</Button>{' '}
-                                <Button className="Buttons" as={Link} to={`/mycolaborations`} variant="warning">My colaborations</Button>{' '}</>}
+                                <Button className="Buttons" as={Link} to={`/mycollaborations`} variant="warning">My collaborations</Button>{' '}</>}
                             <Button className="Buttons" as={Link} to={`/favorites`} variant="warning">Favorites Bibles</Button>{' '}
                             <Button className="Buttons" as={Link} to={`/editProfile/${user._id}`} variant="warning">Edit my profile</Button>{' '}
-
+                            {user.userRole == "Admin" && <Button className="Buttons" as={Link} to={`/everybody`} variant="danger">All the users</Button>}
                         </Col>
                     </Row>
                     <Row>
                         <Col md={{ span: 12 }} className="d-flex justify-content-center">
                             {user && <>
-
                                 <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
                             <Button className="Buttons" variant="outline-light" as={Link} to={`/`}  >Return</Button>{' '}
                         </Col>

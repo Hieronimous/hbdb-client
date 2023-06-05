@@ -13,7 +13,7 @@ const RegisterForm = ({ }) => {
         username: '', email: '', password: '', firstName: '', lastName: '', userRole: '', currentInstitution: '', avatar: ''
     })
 
-    const roleSelect = ["", "Visitor", "Colaborator"]
+    const roleSelect = ["", "Visitor", "Collaborator"]
 
     const [loadingImage, setLoadingImage] = useState(false)
 
@@ -103,7 +103,7 @@ const RegisterForm = ({ }) => {
                                             </Form.Group>
 
                                             <Form.Group className="mb-3" controlId="userRole">
-                                                <Form.Label>Visitor/Colaborator</Form.Label>
+                                                <Form.Label>Visitor/Collaborator</Form.Label>
                                                 <Form.Control
                                                     as="select"
                                                     value={userRole}
@@ -119,10 +119,10 @@ const RegisterForm = ({ }) => {
                                                     ))}
                                                 </Form.Control>
                                             </Form.Group>
-                                            {userRole === "Colaborator" && <>
+                                            {userRole === "Collaborator" && <>
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
                                                     <Form.Label>Current Institution</Form.Label>
-                                                    <Form.Control type="text" value={currentInstitution} placeholder="Colaborator actual working institution" onChange={handleInputChange} name="currentInstitution" />
+                                                    <Form.Control type="text" value={currentInstitution} placeholder="Collaborator actual working institution" onChange={handleInputChange} name="currentInstitution" />
                                                 </Form.Group> </>}
                                             <Form.Group className="mb-3" controlId="image" required>
                                                 <Form.Label>Profile Image</Form.Label>

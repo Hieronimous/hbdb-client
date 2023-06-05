@@ -9,23 +9,21 @@ import LoginPage from '../pages/LoginPage/LoginPage'
 import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import PrivateRoute from './PrivateRoutes'
 import UserEditForm from '../components/UserComponents/EditUserForm/EditUserForm'
-import ColaboratorsListPage from '../pages/ColaboratorsPage/ColaboratorsPage'
-import MyColaborationsPage from '../pages/MyColaborationsPage/MyColaborationsPage'
+import CollaboratorsListPage from '../pages/CollaboratorsPage/CollaboratorsPage'
+import MyCollaborationsPage from '../pages/MyCollaborationsPage/MyCollaborationsPage'
 import MyFavoritesBiblesPage from '../pages/MyFavBibles/MyFavBibles'
+import EverybodyPage from '../pages/EverybodyPage/EverybodyPage'
 
 
 const AppRoutes = () => {
 
     return (
         <Routes>
-
             <Route path="/" element={<LandingPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/bibles" element={<BiblesListPage />} />
-            <Route path="/colaborators" element={<ColaboratorsListPage />} />
-            <Route path="/countries" element={<h1>countries</h1>} />
-            <Route path="/libraries" element={<h1>libraries</h1>} />
+            <Route path="/collaborators" element={<CollaboratorsListPage />} />
             <Route path="*" element={<h1>404</h1>} />
 
             <Route element={<PrivateRoute />}>
@@ -34,8 +32,9 @@ const AppRoutes = () => {
                 <Route path="/edit/:bible_id" element={<EditBibleForm />} />
                 <Route path="/new-entry" element={<NewBiblePage />} />
                 <Route path="/editProfile/:user_id" element={<UserEditForm />} />
-                <Route path="/mycolaborations" element={<MyColaborationsPage />} />
+                <Route path="/mycollaborations" element={<MyCollaborationsPage />} />
                 <Route path="/favorites" element={<MyFavoritesBiblesPage />} />
+                <Route path="/everybody" element={<EverybodyPage />} />
             </Route>
         </Routes>
     )

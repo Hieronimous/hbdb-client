@@ -4,9 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
 import { Link } from "react-router-dom";
 import Loader from "../../components/PagesComponents/Loader/Loader";
-import UserColaborationsList from "../../components/UserComponents/UserColaborationsList/UserColaborationsList";
+import UserCollaborationsList from "../../components/UserComponents/UserCollaborationsList/UserCollaborationsList";
 
-const MyColaborationsPage = () => {
+const MyCollaborationsPage = () => {
 
     const [ownerBibles, setOwnerBibles] = useState([])
 
@@ -31,7 +31,7 @@ const MyColaborationsPage = () => {
 
         !ownerBibles ? <Loader /> :
             <div>
-                <h1 className="detailTitle">My colaborations</h1>
+                <h1 className="detailTitle">My collaborations</h1>
                 <hr />
                 <Container>
                     <Link to="/new-entry">
@@ -39,7 +39,7 @@ const MyColaborationsPage = () => {
                     </Link>
                     <hr />
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        <UserColaborationsList ownerBibles={ownerBibles} />
+                        <UserCollaborationsList ownerBibles={ownerBibles} />
                     </Row>
                     <hr />
                     < Link to="/profile" >
@@ -50,4 +50,4 @@ const MyColaborationsPage = () => {
     )
 }
 
-export default MyColaborationsPage
+export default MyCollaborationsPage
