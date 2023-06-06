@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Col } from "react-bootstrap";
 import userService from "../../../services/user.services";
 import { useNavigate, } from 'react-router-dom';
 import { useContext } from "react";
@@ -16,7 +16,7 @@ const CollaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstit
 
             userService.deleteUser(user._id)
                 .then(() => {
-                    navigate(`/users`);
+                    navigate(`/everybody`); // arreglar no redirige
                 })
                 .catch(err => console.log(err));
         }
@@ -25,17 +25,27 @@ const CollaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstit
     return (
         <>
             <Card className="CollaboratorCard">
+
                 <Card.Img className="image" variant="top" src={avatar} />
                 <Card.Body>
-                    <Card.Title><h3><b>{firstName} {lastName}</b></h3></Card.Title>
-                    <Card.Title><b>Institution: </b>{currentInstitution}</Card.Title>
+                    <Card.Title className="d-flex justify-content-center"><h3><b>{firstName} {lastName}</b></h3></Card.Title>
+                    <Card.Title className="d-flex justify-content-center">{currentInstitution}</Card.Title>
                 </Card.Body>
 
                 <Card.Body>
-                    <div >
-                        {user.userRole == "Admin" && <>
-                            <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
-                    </div>
+                    <Col className="d-flex justify-content-center">
+                        <div >
+                            {user.userRole == "Admin" && <>
+                                <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete Collaborator</Button>{' '}</>}
+                        </div>
+
+
+                        {user &&
+                            <Button className="Buttons" as={Link} to={`/details/${_id}`} variant="outline-secondary" size="sm" >More about me</Button>
+
+                        }
+
+                    </Col>
                 </Card.Body >
             </Card >
         </>

@@ -30,7 +30,6 @@ const BiblesListPage = () => {
     }
 
     const resetBibles = () => {
-        console.log('hola me reseteoooo')
         setBibles(biblesBackup)
     }
 

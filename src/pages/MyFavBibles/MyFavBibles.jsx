@@ -1,5 +1,4 @@
 import { Container, Button, Row } from "react-bootstrap";
-import biblesService from "../../services/bibles.services";
 import usersService from "../../services/user.services";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
@@ -24,7 +23,7 @@ const MyFavoritesBiblesPage = () => {
             })
             .catch(err => console.log(err));
     };
-    // arreglar
+
     return (
         !favoriteBibles ? (
             <Loader />

@@ -12,10 +12,10 @@ const UserEditForm = ({ }) => {
     const { user_id } = useParams();
     const { storeToken, authenticateUser } = useContext(AuthContext)
     const [userData, setUserData] = useState({
-        username: '', email: '', firstName: '', lastName: '', userRole: '', avatar: '', currentInstitution: ''
+        username: '', email: '', firstName: '', lastName: '', userRole: '', avatar: '', currentInstitution: '', collaboratorDetail: ''
     })
 
-    const { username, email, firstName, lastName, userRole, currentInstitution } = userData
+    const { username, email, firstName, lastName, userRole, currentInstitution, collaboratorDetail } = userData
     const roleSelect = ["", "Visitor", "Collaborator"]
     useEffect(() => {
         loadUser()
@@ -139,6 +139,11 @@ const UserEditForm = ({ }) => {
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
                                                     <Form.Label>Current Institution</Form.Label>
                                                     <Form.Control type="text" value={currentInstitution} placeholder="Collaborator current institution" onChange={handleInputChange} name="currentInstitution" />
+                                                </Form.Group>
+
+                                                <Form.Group className="mb-3" controlId="collaboratorDetail">
+                                                    <Form.Label>About you</Form.Label>
+                                                    <Form.Control type="text" as="textarea" rows={5} value={collaboratorDetail} placeholder="A brief introduction about your career" onChange={handleInputChange} name="collaboratorDetail" />
                                                 </Form.Group> </>}
 
                                             <div className='mb-4'>

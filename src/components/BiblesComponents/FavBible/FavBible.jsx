@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import userService from './../../../services/user.services';
 import './FavBible.css';
-import Loader from '../../PagesComponents/Loader/Loader';
 import { AuthContext } from "../../../contexts/auth.context";
 import favBibleImg from './../../../assets/fullS.png';
 import unfavBible from './../../../assets/emptyS.png';
