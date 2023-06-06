@@ -20,5 +20,6 @@ span {
     font-size: 25px;
 }
 
-
-/* #f2ebaa; */
+select option[disabled] {
+    color: rgb(66, 225, 237);
+}

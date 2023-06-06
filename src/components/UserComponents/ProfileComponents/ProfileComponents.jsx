@@ -2,11 +2,14 @@ import { Button, Row, Col, Container } from "react-bootstrap"
 import { useNavigate, Link } from 'react-router-dom'
 import './ProfileComponents.css'
 import userService from "../../../services/user.services"
+import { useContext } from "react"
+import { AuthContext } from "../../../contexts/auth.context"
 
 
 const ProfileComponents = ({ user }) => {
 
     const navigate = useNavigate();
+    const { logout } = useContext(AuthContext)
 
     const handledelete = () => {
         const isConfirmed = window.confirm('Are you sure you want to delete your profile?');
@@ -14,21 +17,12 @@ const ProfileComponents = ({ user }) => {
             userService
                 .deleteUser(user._id)
                 .then(() => {
-                    // Perform any necessary logout action here
-                    // Example: logoutUser();
+                    logout();
                     navigate('/');
                 })
                 .catch(err => console.log(err));
         }
     };
-
-    // useEffect(() => {
-    //     // Perform any necessary cleanup action here
-    //     return () => {
-    //         // Example: resetUserState();
-    //     };
-    // }, []);
-
 
     return (
         <div>

@@ -3,14 +3,15 @@ import { Col } from "react-bootstrap";
 import BibleCard from "../../BiblesComponents/BibleCard/BibleCard"
 
 
-const UserFavoriteList = ({ favoriteBibles }) => {
+const UserFavoriteList = ({ favoriteBible }) => {
+
 
     return (
-        favoriteBibles.map(elm =>
-            <Col key={elm._id}>
-                <BibleCard {...elm} />
-            </Col>
-        )
+
+        <Col key={favoriteBible._id}>
+            <BibleCard {...favoriteBible} />
+        </Col>
+
     )
 }
 

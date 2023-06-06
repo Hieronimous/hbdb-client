@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { Form, Button, Container, Col, Row } from "react-bootstrap"
-import authService from './../../../services/auth.services'
-import { useNavigate } from "react-router-dom"
-import './RegisterForm.css'
-import uploadServices from "../../../services/upload.services"
+import { useState } from "react";
+import { Form, Button, Container, Col, Row, Alert } from "react-bootstrap";
+import authService from './../../../services/auth.services';
+import { useNavigate } from "react-router-dom";
+import './RegisterForm.css';
+import uploadServices from "../../../services/upload.services";
 import React from 'react';
 
 
@@ -22,6 +22,9 @@ const RegisterForm = () => {
     const roleSelect = ['', 'Visitor', 'Collaborator'];
 
     const [loadingImage, setLoadingImage] = useState(false);
+    const [errors, setErrors] = useState([]);
+
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -34,35 +37,35 @@ const RegisterForm = () => {
         event.preventDefault();
 
         if (registerData.username.length < 4) {
-            alert('Username must have a minimum of 4 characters');
+            setErrorMessage('Username must have a minimum of 4 characters');
             return;
         }
 
         if (!registerData.firstName) {
-            alert('First name is required');
+            setErrorMessage('First name is required');
             return;
         }
         if (!registerData.lastName) {
-            alert('Larst name is required');
+            setErrorMessage('Last name is required');
             return;
         }
 
         if (!registerData.email) {
-            alert('Email is required');
+            setErrorMessage('Email is required');
             return;
         }
 
         if (!registerData.password) {
-            alert('Password is required');
+            setErrorMessage('Password is required');
             return;
         }
         if (registerData.password.length < 6) {
-            alert('Password must have at least 6 characters');
+            setErrorMessage('Password must have at least 6 characters');
             return;
         }
 
         if (!registerData.userRole) {
-            alert('please indicate if you are a visitor or collaborator');
+            setErrorMessage('Please indicate if you are a visitor or collaborator');
             return;
         }
 
@@ -71,7 +74,7 @@ const RegisterForm = () => {
         authService
             .signup(registerData)
             .then(({ data }) => navigate('/login'))
-            .catch(err => console.log(err));
+            .catch(err => setErrors(err.response.data.errorMessages))
     };
 
     const handleFileUpload = event => {
@@ -107,6 +110,9 @@ const RegisterForm = () => {
                                 >
                                     <div className="card-body p-5 shadow-5 text-center">
                                         <h2 className="fw-bold mb-5">Sign up now</h2>
+                                        {errorMessage && (
+                                            <Alert variant="danger">{errorMessage}</Alert>
+                                        )}
                                         <form onSubmit={handleSubmit}>
                                             <Col>
                                                 <Form.Group className="mb-3" controlId="username">
@@ -121,7 +127,7 @@ const RegisterForm = () => {
 
                                             <Row className="mb-4">
                                                 <Col>
-                                                    <Form.Group className="mb-3" controlId="firstName" >
+                                                    <Form.Group className="mb-3" controlId="firstName">
                                                         <Form.Label>First name</Form.Label>
                                                         <Form.Control type="text" value={firstName} onChange={handleInputChange} name="firstName" required />
                                                     </Form.Group>
@@ -171,7 +177,7 @@ const RegisterForm = () => {
                                                     />
                                                 </Form.Group>
                                             )}
-
+                                            {errors?.length > 0 && errors.map(elm => <p>{elm}</p>)}
                                             <div className="mb-4">
                                                 <Button className="Buttons" variant="warning" type="submit" disabled={loadingImage}>
                                                     {loadingImage ? 'Loading...' : 'Sign Up'}
@@ -200,4 +206,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm
+export default RegisterForm;

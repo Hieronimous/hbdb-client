@@ -57,7 +57,7 @@ const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeocultur
                                     <Button className="Buttons" variant="outline-secondary" as={Link} onClick={handledelete} size="sm" >Delete</Button>
                                 </>}
 
-                                <FavBible />
+                                <FavBible id={_id} />
                             </>
                         }
                     </div>

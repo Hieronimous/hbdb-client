@@ -2,4 +2,6 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: linear-gradient(#3c297b, #a1773a, #F0E494);
   background-size: cover;
+  max-width: 100%;
+  margin: 0 auto;
 }

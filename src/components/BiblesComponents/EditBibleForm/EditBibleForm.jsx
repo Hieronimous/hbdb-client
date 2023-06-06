@@ -662,7 +662,7 @@ const EditBibleForm = ({ }) => {
                             </Col>
                             <Col>
                                 <div className='d-grid'>
-                                    <Button variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Crate'}</Button>
+                                    <Button variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Edit'}</Button>
                                 </div>
                             </Col>
                         </Row>

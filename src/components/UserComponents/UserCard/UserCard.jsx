@@ -1,22 +1,34 @@
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import userService from "../../../services/user.services";
-import { useNavigate, } from 'react-router-dom';
-import { useContext } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import "./UserCard.css"
 
-const UserCard = ({ avatar, firstName, lastName, userRole, currentInstitution, _id }) => {
+const UserCard = ({ avatar, firstName, lastName, _id }) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
+    const [userData, setUserData] = useState([{ userRole: '' }])
+
+    useEffect(() => {
+        userService
+            .getOneUser(_id)
+            .then(response => {
+                setUserData(response.data);
+            })
+            .catch(err => console.log(err));
+    }, [_id]);
+
+    console.log(userData)
 
     const handledelete = event => {
         const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
         if (isConfirmed) {
 
-            userService.deleteUser(user._id)
+            userService.deleteUser(userData._id)
                 .then(() => {
-                    navigate(`/users`);
+                    navigate(`/everybody`);
                 })
                 .catch(err => console.log(err));
         }
@@ -32,7 +44,7 @@ const UserCard = ({ avatar, firstName, lastName, userRole, currentInstitution, _
                 <Card.Body>
                     <div >
                         {user.userRole == "Admin" && <>
-                            <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
+                            <Button className="Buttons" variant="danger" as={Link} onClick={handledelete}  >Delete user</Button>{' '}</>}
                     </div>
                 </Card.Body >
             </Card >

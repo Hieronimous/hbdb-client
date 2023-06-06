@@ -1,56 +1,48 @@
-
-import React, { useState } from 'react';
-import userService from './../../../services/user.services'
+import React, { useState, useContext } from 'react';
+import userService from './../../../services/user.services';
 import './FavBible.css';
 import Loader from '../../PagesComponents/Loader/Loader';
-
+import { AuthContext } from "../../../contexts/auth.context";
 import favBibleImg from './../../../assets/fullS.png';
 import unfavBible from './../../../assets/emptyS.png';
 
-
-const FavBible = () => {
+const FavBible = ({ id }) => {
     const [fav, setFav] = useState(false);
+    const { user } = useContext(AuthContext);
 
-    // const [useView, setUserView] = useState
+    const handleToggleFav = () => {
+        if (fav) {
+            handleDeleteFav();
+        } else {
+            handleAddFav();
+        }
+    };
 
-    // const handleSubmitFavorites = e => {
-    //     e.preventDefault()
-    //     userService
-    //         .userAddFriend(user._id, id)
-    //         .then(({ data }) => {
-    //             const updateUser = data
-    //             setUserView(updateUser)
-    //         })
-    //         .catch(err => console.log(err))
-    // }
+    const handleAddFav = () => {
 
-    // const handleSubmitDeleteFriend = e => {
-    //     e.preventDefault()
-    //     userService
-    //         .userDeleteFriend(user._id, id)
-    //         .then(({ data }) => {
-    //             const updateUser = data
-    //             setUserView(updateUser)
-    //         })
-    //         .catch(err => console.log(err))
-    // }
+        userService
+            .addFav(user._id, id)
+            .then(({ data }) => {
+                const updatedUser = data;
+                setFav(updatedUser.favoriteBibles.includes(id));
+            })
+            .catch(err => console.log(err));
+    };
 
-    const handleClick = () => {
-
-        setFav(!fav);
-        // !userView ?
-        //     <Loader /> :
-        //     userView.favoriteBibles.includes(id) ?
-
-        //         // una estrella o la otra
-
-
+    const handleDeleteFav = () => {
+        userService
+            .deleteFav(user._id, id)
+            .then(({ data }) => {
+                const updatedUser = data;
+                setFav(updatedUser.favoriteBibles.includes(id));
+            })
+            .catch(err => console.log(err));
     };
 
     return (
         <img
             src={fav ? favBibleImg : unfavBible}
-            onClick={handleClick}
+            onClick={handleToggleFav}
             className="favStar"
             alt="favStar"
         />

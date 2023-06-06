@@ -52,7 +52,6 @@ const UserEditForm = ({ }) => {
             .catch(err => console.log(err))
     }
 
-
     const handleFileUpload = event => {
 
         const formData = new FormData()
@@ -93,19 +92,21 @@ const UserEditForm = ({ }) => {
                                                     <Form.Control type="text" value={username} onChange={handleInputChange} name="username" />
                                                 </Form.Group>
                                             </Col>
+
+                                            <Col>
+                                                <Form.Group className="mb-3" controlId="image" required>
+                                                    <Form.Label>Profile Image</Form.Label>
+                                                    <Form.Control type="file" onChange={handleFileUpload} />
+                                                </Form.Group>
+                                            </Col>
                                             <Row className='mb-4'>
-
-
                                                 <Col>
                                                     <Form.Group className="mb-3" controlId="username">
                                                         <Form.Label>First name</Form.Label>
                                                         <Form.Control type="text" value={firstName} onChange={handleInputChange} name="firstName" />
                                                     </Form.Group>
                                                 </Col>
-                                                <Form.Group className="mb-3" controlId="image" required>
-                                                    <Form.Label>Profile Image</Form.Label>
-                                                    <Form.Control type="file" onChange={handleFileUpload} />
-                                                </Form.Group>
+
                                                 <Col>
                                                     <Form.Group className="mb-3" controlId="lastName">
                                                         <Form.Label>Last Name</Form.Label>

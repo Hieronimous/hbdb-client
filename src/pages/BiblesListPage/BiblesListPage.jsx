@@ -14,6 +14,7 @@ const BiblesListPage = () => {
     const [bibles, setBibles] = useState()
     const [biblesBackup, setBiblesBackup] = useState()
 
+
     useEffect(() => {
         loadBibles()
     }, [])
@@ -27,6 +28,13 @@ const BiblesListPage = () => {
             })
             .catch(err => console.log(err))
     }
+
+    const resetBibles = () => {
+        console.log('hola me reseteoooo')
+        setBibles(biblesBackup)
+    }
+
+
     const queriesFilter = queries => {
         const key = Object.keys(queries)[0];
         const value = Object.values(queries)[0];
@@ -61,13 +69,12 @@ const BiblesListPage = () => {
         setBibles(filteredBibles);
     };
 
+
     return (
         !bibles ? <Loader /> :
             <div>
                 <h1 className="detailTitle">The Hebrew Bibles</h1>
                 <hr />
-
-
 
                 <Container>
                     <Row>
@@ -77,7 +84,7 @@ const BiblesListPage = () => {
                     </Row>
                     <Row>
 
-                        <BiblesFilter queriesFilter={queriesFilter} />
+                        <BiblesFilter queriesFilter={queriesFilter} bibles={bibles} resetBibles={resetBibles} />
                     </Row>
 
 

@@ -5,9 +5,10 @@ import BiblesOptions from "./../BiblesOptions/BiblesOptions"
 import Loader from "../../PagesComponents/Loader/Loader"
 import BibleCard from "../BibleCard/BibleCard"
 
-const BiblesFilter = ({ queriesFilter }) => {
+const BiblesFilter = ({ queriesFilter, resetBibles }) => {
 
     const [bibles, setBibles] = useState([])
+    const [biblesBackup, setBiblesBackup] = useState([])
 
 
     const [isLoading, setIsLoading] = useState(true)
@@ -32,6 +33,7 @@ const BiblesFilter = ({ queriesFilter }) => {
 
             .then(({ data }) => {
                 setBibles(data.bibles)
+                setBiblesBackup(data.bibles)
                 setCurrentPage(data.currentPage)
                 setTotalPages(data.totalPages)
                 setIsLoading(false)
@@ -53,6 +55,7 @@ const BiblesFilter = ({ queriesFilter }) => {
             sort: {},
             page: 1,
         });
+        setBibles(biblesBackup)
 
         setCurrentPage(1);
         setTotalPages(0);
@@ -76,7 +79,7 @@ const BiblesFilter = ({ queriesFilter }) => {
                     :
                     <>
 
-                        <BiblesOptions getQueries={getQueries} resetQueries={resetQueries} resetPage={resetPage} />
+                        <BiblesOptions getQueries={getQueries} resetQueries={resetQueries} resetPage={resetPage} resetBibles={resetBibles} />
 
                         {
                             bibles?.length > 0 ?

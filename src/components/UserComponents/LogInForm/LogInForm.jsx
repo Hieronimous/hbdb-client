@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { Form, Button, Container, Row, Col } from "react-bootstrap"
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap"
 import authService from './../../../services/auth.services'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from "../../../contexts/auth.context"
@@ -14,6 +14,7 @@ const LogInForm = () => {
     })
 
     const navigate = useNavigate()
+    const [errors, setErrors] = useState([]);
 
     const { authenticateUser, storeToken, isLoading } = useContext(AuthContext)
 
@@ -37,7 +38,8 @@ const LogInForm = () => {
                     authenticateUser()
                     navigate('/profile')
                 })
-                .catch(err => console.log(err)))
+                .catch(err => setErrors(err.response.data.errorMessages))
+        )
     }
 
     const { password, email } = loginData
@@ -62,6 +64,7 @@ const LogInForm = () => {
                         <br />
                     </div>
                 </Row>
+                {errors?.length > 0 && errors.map(elm => <p>{elm}</p>)}
                 <Row className="decorationLog">
 
 
@@ -75,6 +78,8 @@ const LogInForm = () => {
             </Container>
 
         </Form >
+
+
     )
 }
 

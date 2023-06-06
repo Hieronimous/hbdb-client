@@ -12,12 +12,12 @@ const MyFavoritesBiblesPage = () => {
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        getMyFavorites();
+        user && getMyFavorites();
     }, []);
 
     const getMyFavorites = () => {
         usersService
-            .getOneUser(user?._id)
+            .getOneUser(user._id)
             .then(({ data }) => {
                 const { favoriteBibles } = data;
                 setFavoriteBibles(favoriteBibles);
@@ -36,7 +36,7 @@ const MyFavoritesBiblesPage = () => {
                     <Row xs={1} md={2} lg={4} className="g-4">
                         {favoriteBibles.length >= 1 ? (
                             favoriteBibles.map(bible => {
-                                return <UserFavoriteList favoriteBibles={favoriteBibles} />;
+                                return <UserFavoriteList favoriteBible={bible} />;
                             })
                         ) : (
                             <h3>You don't have any favorite Bibles yet.</h3>
