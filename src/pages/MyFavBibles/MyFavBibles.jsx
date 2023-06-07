@@ -38,7 +38,7 @@ const MyFavoritesBiblesPage = () => {
                                 return <UserFavoriteList favoriteBible={bible} />;
                             })
                         ) : (
-                            <h3>You don't have any favorite Bibles yet.</h3>
+                            <h3>You don't have any favorite Bibles yet</h3>
                         )}
                     </Row>
                     <hr />

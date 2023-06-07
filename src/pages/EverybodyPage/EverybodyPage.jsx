@@ -47,13 +47,20 @@ const EverybodyPage = () => {
                 <h1 className="detailTitle">All the users</h1>
                 <hr />
                 <Container>
-                    <Row xs={1} md={2} lg={4} className="g-4">
-                        <CollaboratorList collaborators={collaborators} />
-                        <UsersList users={users} />
-                    </Row>
+                    <h2><b>Collaborators</b></h2>
                     <hr />
+                    <Row xs={1} md={2} lg={4} className="g-4">
+                        <CollaboratorList collaborators={collaborators} loadCollaborators={loadCollaborators} />
+                    </Row>
+                    <br />
+                    <h2><b>Visitors</b></h2>
+                    <hr />
+                    <Row xs={1} md={2} lg={4} className="g-4">
+                        <UsersList users={users} loadUsers={loadUsers} />
+                    </Row>
+
                     < Link to="/" >
-                        <Button className="finalRetunButton" variant="outline-secondary" >return</Button>
+                        <Button className="finalRetunButton" variant="warning" >return</Button>
                     </Link >
                 </Container>
             </div>

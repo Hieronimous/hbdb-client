@@ -5,9 +5,9 @@ import { AuthContext } from "../../../contexts/auth.context";
 import favBibleImg from './../../../assets/fullS.png';
 import unfavBible from './../../../assets/emptyS.png';
 
-const FavBible = ({ id }) => {
-    const [fav, setFav] = useState(false);
+const FavBible = ({ id, isFavorite }) => {
     const { user } = useContext(AuthContext);
+    const [fav, setFav] = useState(isFavorite);
 
     const handleToggleFav = () => {
         if (fav) {

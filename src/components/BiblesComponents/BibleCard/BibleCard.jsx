@@ -6,10 +6,9 @@ import { useNavigate, } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 
-
 import './BibleCard.css'
 
-const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeoculturalArea, _id, owner, }) => {
+const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeoculturalArea, _id, owner, loadBibles, isFavorite }) => {
     const navigate = useNavigate();
 
     const { user } = useContext(AuthContext)
@@ -23,8 +22,7 @@ const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeocultur
             biblesService
                 .deleteBible(_id)
                 .then(() => {
-                    navigate(`/bibles`); // noredirige arreglar
-                    // TODO: ACTUALIZAR LA LISTA DE BIBLIAS MEDIANTE EL loadBibles() DEL PADRE
+                    loadBibles()
                 })
                 .catch(err => console.log(err));
         }
@@ -57,7 +55,7 @@ const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeocultur
                                     <Button className="Buttons" variant="outline-secondary" as={Link} onClick={handledelete} size="sm" >Delete</Button>
                                 </>}
 
-                                <FavBible id={_id} />
+                                <FavBible id={_id} isFavorite={isFavorite} />
                             </>
                         }
                     </div>

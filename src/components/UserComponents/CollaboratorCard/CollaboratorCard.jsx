@@ -1,27 +1,27 @@
 import { Link } from "react-router-dom";
-import { Card, Button, Col } from "react-bootstrap";
+import { Card, Button, Col, Row } from "react-bootstrap";
 import userService from "../../../services/user.services";
-import { useNavigate, } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import "./CollaboratorCard.css"
 
-const CollaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstitution, _id }) => {
-    const navigate = useNavigate();
+const CollaboratorCard = ({ avatar, firstName, lastName, currentInstitution, _id, loadCollaborators, loadUsers }) => {
     const { user } = useContext(AuthContext)
 
     const handledelete = event => {
         const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
         if (isConfirmed) {
 
-            userService.deleteUser(user._id)
+            userService
+                .deleteUser(_id)
                 .then(() => {
-                    navigate(`/everybody`); // arreglar no redirige
+                    loadCollaborators()//arreglar, no recarga colaboradores
+                    loadUsers() //arreglar, no recarga colaboradores
                 })
                 .catch(err => console.log(err));
         }
     }
-
+    console.log(_id)
     return (
         <>
             <Card className="CollaboratorCard">
@@ -33,19 +33,25 @@ const CollaboratorCard = ({ avatar, firstName, lastName, userRole, currentInstit
                 </Card.Body>
 
                 <Card.Body>
-                    <Col className="d-flex justify-content-center">
-                        <div >
-                            {user.userRole == "Admin" && <>
-                                <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete Collaborator</Button>{' '}</>}
-                        </div>
+                    <Row>
+                        <Col className="d-flex justify-content-center">
 
+                            {user &&
+                                <Button className="Buttons" as={Link} to={`/collaboratorDetails/${_id}`} variant="outline-secondary" size="sm" >More about me</Button>
 
-                        {user &&
-                            <Button className="Buttons" as={Link} to={`/details/${_id}`} variant="outline-secondary" size="sm" >More about me</Button>
+                            }
 
-                        }
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="d-flex justify-content-center">
+                            <div >
+                                {user.userRole == "Admin" && <>
+                                    <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete Collaborator</Button>{' '}</>}
+                            </div>
 
-                    </Col>
+                        </Col>
+                    </Row>
                 </Card.Body >
             </Card >
         </>

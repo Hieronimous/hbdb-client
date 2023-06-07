@@ -13,7 +13,7 @@ import CollaboratorsListPage from '../pages/CollaboratorsPage/CollaboratorsPage'
 import MyCollaborationsPage from '../pages/MyCollaborationsPage/MyCollaborationsPage'
 import MyFavoritesBiblesPage from '../pages/MyFavBibles/MyFavBibles'
 import EverybodyPage from '../pages/EverybodyPage/EverybodyPage'
-import CollaboratorDetailPage from '../pages/CollaboratorDetailPage/CollaboratorDetailPage'
+import CollaboratorDetailPage from './../pages/CollaboratorDetailPage/CollaboratorDetailPage'
 
 const AppRoutes = () => {
 
@@ -35,7 +35,7 @@ const AppRoutes = () => {
                 <Route path="/mycollaborations" element={<MyCollaborationsPage />} />
                 <Route path="/favorites" element={<MyFavoritesBiblesPage />} />
                 <Route path="/everybody" element={<EverybodyPage />} />
-                <Route path="/details/:user_id" element={<CollaboratorDetailPage />} />
+                <Route path="/collaboratorDetails/:user_id" element={<CollaboratorDetailPage />} />
             </Route>
         </Routes>
     )

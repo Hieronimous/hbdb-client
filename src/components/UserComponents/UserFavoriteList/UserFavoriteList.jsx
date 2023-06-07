@@ -9,7 +9,7 @@ const UserFavoriteList = ({ favoriteBible }) => {
     return (
 
         <Col key={favoriteBible._id}>
-            <BibleCard {...favoriteBible} />
+            <BibleCard {...favoriteBible} isFavorite={true} />
         </Col>
 
     )

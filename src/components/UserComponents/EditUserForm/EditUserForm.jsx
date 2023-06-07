@@ -14,9 +14,9 @@ const UserEditForm = ({ }) => {
     const [userData, setUserData] = useState({
         username: '', email: '', firstName: '', lastName: '', userRole: '', avatar: '', currentInstitution: '', collaboratorDetail: ''
     })
-
     const { username, email, firstName, lastName, userRole, currentInstitution, collaboratorDetail } = userData
     const roleSelect = ["", "Visitor", "Collaborator"]
+
     useEffect(() => {
         loadUser()
     }, [user_id])
@@ -51,6 +51,8 @@ const UserEditForm = ({ }) => {
             })
             .catch(err => console.log(err))
     }
+
+    console.log(userRole)
 
     const handleFileUpload = event => {
 
@@ -122,7 +124,7 @@ const UserEditForm = ({ }) => {
                                                 <Form.Label>Visitor/Collaborator</Form.Label>
                                                 <Form.Control
                                                     as="select"
-                                                    value={userRole}
+                                                    value={userRole[0]}
                                                     onChange={handleInputChange}
                                                     name="userRole"
                                                     defaultValue="Visitor"
@@ -135,7 +137,7 @@ const UserEditForm = ({ }) => {
                                                 </Form.Control>
                                             </Form.Group>
 
-                                            {userRole === "Collaborator" && <>
+                                            {userRole[0] === "Collaborator" && <>
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
                                                     <Form.Label>Current Institution</Form.Label>
                                                     <Form.Control type="text" value={currentInstitution} placeholder="Collaborator current institution" onChange={handleInputChange} name="currentInstitution" />

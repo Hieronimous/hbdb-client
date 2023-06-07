@@ -46,7 +46,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
         getQueries({ [id]: value });
     }
 
-    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Aramaic & vernacular"];
+    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Hebrew & Spanish", "Aramaic & vernacular", "Arabic"];
     const formatSelect = ["Codex", "Scroll", "Fragment"];
     const centurySelect = ["Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"];
     const scriptGeoculturalAreaSelect = ["Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"];

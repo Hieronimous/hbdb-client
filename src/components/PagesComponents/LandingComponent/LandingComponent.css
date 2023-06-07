@@ -1,0 +1,45 @@
+.full-width-carousel {
+    width: 70%;
+    padding: 40px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.carousel-with-content {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 100px;
+}
+
+.carousel-with-content .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+}
+
+.text-container {
+    padding: 20px;
+}
+
+.video-section {
+    display: flex;
+    align-items: center;
+}
+
+.video-container {
+    width: 40%;
+    height: 300px;
+}
+
+.text-container {
+    width: 50%;
+}
+
+.librariesText {
+    font-size: 60px;
+    color: #3c297b;
+    padding: 30px;
+    text-align: center;
+}

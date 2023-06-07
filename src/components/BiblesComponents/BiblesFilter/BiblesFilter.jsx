@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Pagination, Col } from "react-bootstrap"
+import { Col } from "react-bootstrap"
 import biblesService from "./../../../services/bibles.services"
 import BiblesOptions from "./../BiblesOptions/BiblesOptions"
 import Loader from "../../PagesComponents/Loader/Loader"
@@ -96,16 +96,6 @@ const BiblesFilter = ({ queriesFilter, resetBibles }) => {
                                 <p ></p>
                         }
 
-                        {
-                            totalPages !== 0 &&
-                            <Pagination
-                                pages={totalPages}
-                                activePage={currentPage}
-                                className={'pagination'}
-                                onChange={handleOnChange}
-                                variant="shaded"
-                            />
-                        }
 
 
                     </>

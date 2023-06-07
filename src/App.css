@@ -1,8 +1,12 @@
 .App {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background: linear-gradient(#3c297b, #a1773a, #F0E494);
+}
+
+body {
+  background: linear-gradient(#3c297b 0%, #a1773a 50%, #F0E494 100%);
   background-size: cover;
-  height: 100%;
   max-width: 100%;
   margin: 0 auto;
+  background-repeat: no-repeat;
+
 }

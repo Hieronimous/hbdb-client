@@ -36,9 +36,9 @@ const LogInForm = () => {
                 .then(({ data }) => {
                     storeToken(data.authToken)
                     authenticateUser()
-                    navigate('/profile')
+                    navigate('/')
                 })
-                .catch(err => setErrors(err.response.data.errorMessages))
+                .catch(err => setErrors([err.response.data.message]))
         )
     }
 

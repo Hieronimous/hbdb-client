@@ -1,11 +1,9 @@
-import './LandingPage.css'
-import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
+import LandingComponent from '../../components/PagesComponents/LandingComponent/LandingComponent'
 
 const LandingPage = () => {
     return (
         <div className="LandingPage">
-
+            <LandingComponent />
         </div>
     )
 }

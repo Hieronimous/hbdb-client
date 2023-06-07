@@ -35,45 +35,16 @@ const RegisterForm = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        if (registerData.username.length < 4) {
-            setErrorMessage('Username must have a minimum of 4 characters');
-            return;
-        }
-
-        if (!registerData.firstName) {
-            setErrorMessage('First name is required');
-            return;
-        }
-        if (!registerData.lastName) {
-            setErrorMessage('Last name is required');
-            return;
-        }
-
-        if (!registerData.email) {
-            setErrorMessage('Email is required');
-            return;
-        }
-
-        if (!registerData.password) {
-            setErrorMessage('Password is required');
-            return;
-        }
-        if (registerData.password.length < 6) {
-            setErrorMessage('Password must have at least 6 characters');
-            return;
-        }
-
-        if (!registerData.userRole) {
-            setErrorMessage('Please indicate if you are a visitor or collaborator');
-            return;
-        }
-
         setLoadingImage(true);
 
         authService
             .signup(registerData)
             .then(({ data }) => navigate('/login'))
-            .catch(err => setErrors(err.response.data.errorMessages))
+            .catch(err => {
+                const errors = err.response.data.errorMessages ? err.response.data.errorMessages : err.response.data.message
+                setErrors([errors])
+                setLoadingImage(false)
+            })
     };
 
     const handleFileUpload = event => {

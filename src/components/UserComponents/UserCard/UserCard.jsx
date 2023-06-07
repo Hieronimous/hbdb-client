@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import "./UserCard.css"
 
-const UserCard = ({ avatar, firstName, lastName, _id }) => {
+const UserCard = ({ avatar, firstName, lastName, _id, loadUsers }) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     const [userData, setUserData] = useState([{ userRole: '' }])
@@ -28,7 +28,7 @@ const UserCard = ({ avatar, firstName, lastName, _id }) => {
 
             userService.deleteUser(userData._id)
                 .then(() => {
-                    navigate(`/everybody`);  ///arreglar no redirige
+                    loadUsers()
                 })
                 .catch(err => console.log(err));
         }

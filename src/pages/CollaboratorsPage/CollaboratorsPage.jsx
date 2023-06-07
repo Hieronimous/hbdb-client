@@ -31,7 +31,7 @@ const CollaboratorsListPage = () => {
                 <hr />
                 <Container>
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        <CollaboratorList collaborators={collaborators} />
+                        <CollaboratorList collaborators={collaborators} loadCollaborators={loadCollaborators} />
                     </Row>
                     <hr />
                     < Link to="/" >

@@ -29,17 +29,25 @@ const MyCollaborationsPage = () => {
 
     return (
 
-        !ownerBibles ? <Loader /> :
+        !ownerBibles ? (
+            <Loader />
+        ) : (
             <div>
                 <h1 className="detailTitle">My collaborations</h1>
                 <hr />
+                <Link to="/new-entry">
+                    <Button variant="outline-warning" >New entry</Button>
+                </Link>
+                <hr />
                 <Container>
-                    <Link to="/new-entry">
-                        <Button variant="outline-warning" >New entry</Button>
-                    </Link>
-                    <hr />
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        <UserCollaborationsList ownerBibles={ownerBibles} />
+                        {ownerBibles.length >= 1 ? (
+                            ownerBibles.map(ownerBibles => {
+                                return <UserCollaborationsList ownerBibles={ownerBibles} loadBibles={loadBibles} />;
+                            })
+                        ) : (
+                            <h3>You don't have any collaborations yet</h3>
+                        )}
                     </Row>
                     <hr />
                     < Link to="/profile" >
@@ -47,7 +55,9 @@ const MyCollaborationsPage = () => {
                     </Link >
                 </Container>
             </div>
+        )
     )
 }
 
 export default MyCollaborationsPage
+

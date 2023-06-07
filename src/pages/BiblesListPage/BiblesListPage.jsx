@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Button, Col } from "react-bootstrap";
 import biblesService from "../../services/bibles.services";
@@ -7,17 +7,20 @@ import "./BiblesListPage.css"
 import Loader from "../../components/PagesComponents/Loader/Loader";
 import BibleSearch from "../../components/BiblesComponents/BibleSearch/BibleSearch";
 import BiblesFilter from "../../components/BiblesComponents/BiblesFilter/BiblesFilter";
+import { AuthContext } from "../../contexts/auth.context";
+import userService from "../../services/user.services";
 
 
 const BiblesListPage = () => {
 
     const [bibles, setBibles] = useState()
+    const [favBibles, setFavBibles] = useState([])
     const [biblesBackup, setBiblesBackup] = useState()
-
+    const { user } = useContext(AuthContext)
 
     useEffect(() => {
         loadBibles()
-    }, [])
+    }, [user])
 
     const loadBibles = () => {
         biblesService
@@ -25,6 +28,14 @@ const BiblesListPage = () => {
             .then(({ data }) => {
                 setBibles(data);
                 setBiblesBackup(data)
+            })
+            .catch(err => console.log(err))
+
+        userService
+            .getOneUser(user?._id)
+            .then(({ data }) => {
+                setFavBibles(data.favoriteBibles.map(bible => bible._id));
+
             })
             .catch(err => console.log(err))
     }
@@ -76,19 +87,20 @@ const BiblesListPage = () => {
                 <hr />
 
                 <Container>
-                    <Row>
-                        <Col md={{ span: 6, offset: 4 }}>
-                            <BibleSearch filterBibles={filterBibles} />
-                        </Col>
-                    </Row>
-                    <Row>
+                    {user && <>
+                        <Row>
+                            <Col md={{ span: 6, offset: 4 }}>
+                                <BibleSearch filterBibles={filterBibles} />
+                            </Col>
+                        </Row>
+                        <Row>
 
-                        <BiblesFilter queriesFilter={queriesFilter} bibles={bibles} resetBibles={resetBibles} />
-                    </Row>
-
+                            <BiblesFilter queriesFilter={queriesFilter} bibles={bibles} resetBibles={resetBibles} />
+                        </Row>
+                    </>}
 
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        <BibleList bibles={bibles} />
+                        <BibleList bibles={bibles} favBibles={favBibles} loadBibles={loadBibles} />
                     </Row>
                     <hr />
                     < Link to="/" >

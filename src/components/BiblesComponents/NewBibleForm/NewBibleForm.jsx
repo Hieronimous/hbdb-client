@@ -62,7 +62,7 @@ const NewBibleForm = () => {
     })
     const [step, setStep] = useState(1);
 
-    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Aramaic & vernacular"]
+    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Hebrew & Spanish", "Aramaic & vernacular", "Arabic"]
     const formatSelect = ["Codex", "Scroll", "Fragment"]
     const centurySelect = ["Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
     const scriptGeoculturalAreaSelect = ["Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"]
@@ -252,6 +252,9 @@ const NewBibleForm = () => {
                             <Form.Group className="mb-3" controlId="noteToTitle">
                                 <Form.Label>Note to title</Form.Label>
                                 <Form.Control type="text" value={bibleData.noteToTitle} onChange={handleInputChange} name="noteToTitle" />
+                                <Form.Text className="text-muted description">
+                                    Reference to the title as found in the manuscript, if any
+                                </Form.Text>
                             </Form.Group>
                         </Row>
                         <Row>
@@ -259,6 +262,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="date">
                                     <Form.Label>Date</Form.Label>
                                     <Form.Control type="text" value={bibleData.date} onChange={handleInputChange} name="date" />
+                                    <Form.Text className="text-muted description">
+                                        Exact or estimated
+                                    </Form.Text>
                                 </Form.Group>
 
                             </Col>
@@ -274,7 +280,7 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="responsiblePerson">
                                     <Form.Label>Responsible Person</Form.Label>
                                     <Form.Control type="text" value={bibleData.responsiblePerson} onChange={handleInputChange} name="responsiblePerson" />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted description">
                                         Author of any other text acompanying the bible
                                     </Form.Text>
                                 </Form.Group>
@@ -323,6 +329,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="measurements">
                                     <Form.Label>Measurements</Form.Label>
                                     <Form.Control type="text" value={bibleData.measurements} onChange={handleInputChange} name="measurements" />
+                                    <Form.Text className="text-muted description">
+                                        E.g. 27,6x21,5 cm
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -335,6 +344,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="numberOfFolios">
                                     <Form.Label>Number of folios</Form.Label>
                                     <Form.Control type="text" value={bibleData.numberOfFolios} onChange={handleInputChange} name="numberOfFolios" />
+                                    <Form.Text className="text-muted description">
+                                        Without flyleaves
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -344,6 +356,9 @@ const NewBibleForm = () => {
                                     <Form.Label>Foliation</Form.Label>
                                     <Form.Control type="text" as="textarea"
                                         rows={4} value={bibleData.foliation} onChange={handleInputChange} name="foliation" />
+                                    <Form.Text className="text-muted description">
+                                        Ancient or modern with description
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -353,12 +368,15 @@ const NewBibleForm = () => {
                                     <Form.Label>Script</Form.Label>
                                     <Form.Control type="text" value={bibleData.script} onChange={handleInputChange} name="script" />
                                 </Form.Group>
+                                <Form.Text className="text-muted description">
+                                    E.g. Sephardic square script
+                                </Form.Text>
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3" controlId="specialWritingFeatures">
                                     <Form.Label>Special writing features</Form.Label>
                                     <Form.Control type="text" value={bibleData.specialWritingFeatures} onChange={handleInputChange} name="specialWritingFeatures" />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted description">
                                         Presence of vowels, accents and/or masora
                                     </Form.Text>
                                 </Form.Group>
@@ -369,7 +387,7 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="textDistribution">
                                     <Form.Label>Text distribution</Form.Label>
                                     <Form.Control type="text" value={bibleData.textDistribution} onChange={handleInputChange} name="textDistribution" />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted description">
                                         Number of columns and lines per column
                                     </Form.Text>
                                 </Form.Group>
@@ -378,6 +396,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="quireType">
                                     <Form.Label>Quire type</Form.Label>
                                     <Form.Control type="text" value={bibleData.quireType} onChange={handleInputChange} name="quireType" />
+                                    <Form.Text className="text-muted description">
+                                        E.g. 8 fol.
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -393,8 +414,8 @@ const NewBibleForm = () => {
                                     <Form.Label>Text special features</Form.Label>
                                     <Form.Control type="text" as="textarea"
                                         rows={4} value={bibleData.textSpecialFeatures} onChange={handleInputChange} name="textSpecialFeatures" />
-                                    <Form.Text className="text-muted">
-                                        Arrangement of poetic sections and masora
+                                    <Form.Text className="text-muted description">
+                                        Arrangement of poetic sections and Masora, and presence of paratextual signs, such as parasha or haftara marks.
                                     </Form.Text>
                                 </Form.Group>
                             </Col>
@@ -410,6 +431,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="ruling">
                                     <Form.Label>Ruling</Form.Label>
                                     <Form.Control type="text" value={bibleData.ruling} onChange={handleInputChange} name="ruling" />
+                                    <Form.Text className="text-muted description">
+                                        Hard point, plummet/graphite, ink
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -417,6 +441,9 @@ const NewBibleForm = () => {
                             <Col>  <Form.Group className="mb-3" controlId="watermarks">
                                 <Form.Label>Watermarks</Form.Label>
                                 <Form.Control type="text" value={bibleData.watermarks} onChange={handleInputChange} name="watermarks" />
+                                <Form.Text className="text-muted description">
+                                    With reference to Briquet
+                                </Form.Text>
                             </Form.Group>
                             </Col>
                             <Col>
@@ -611,6 +638,9 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="decoration">
                                     <Form.Label>Decoration</Form.Label>
                                     <Form.Control type="text" value={bibleData.decoration} onChange={handleInputChange} name="decoration" />
+                                    <Form.Text className="text-muted description">
+                                        Type of decoration
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -630,7 +660,7 @@ const NewBibleForm = () => {
                                     <Form.Label>References</Form.Label>
                                     <Form.Control type="text" as="textarea"
                                         rows={4} value={bibleData.references} onChange={handleInputChange} name="references" />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted description">
                                         Previous manuscript descriptions
                                     </Form.Text>
                                 </Form.Group>
@@ -654,7 +684,7 @@ const NewBibleForm = () => {
                                 <Form.Group className="mb-3" controlId="digitLink">
                                     <Form.Label>Link to Digitization</Form.Label>
                                     <Form.Control type="text" value={bibleData.digitLink} onChange={handleInputChange} name="digitLink" />
-                                    <Form.Text className="text-muted">
+                                    <Form.Text className="text-muted description">
                                         Complete URL to digitization
                                     </Form.Text>
                                 </Form.Group>
@@ -664,6 +694,9 @@ const NewBibleForm = () => {
                                     <Form.Label>Bibliography</Form.Label>
                                     <Form.Control type="text" as="textarea"
                                         rows={5} value={bibleData.bibliography} onChange={handleInputChange} name="bibliography" />
+                                    <Form.Text className="text-muted description">
+                                        Related to the manuscript in particular
+                                    </Form.Text>
                                 </Form.Group>
                             </Col>
                         </Row>

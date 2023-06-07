@@ -15,3 +15,7 @@
 .form .required {
     display: inline;
 }
+
+.description {
+    font-size: 14px;
+}
