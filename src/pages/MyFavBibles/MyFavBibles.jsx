@@ -2,6 +2,7 @@ import { Container, Button, Row } from "react-bootstrap";
 import usersService from "../../services/user.services";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
+import './MyFavBibles.css'
 import { Link } from "react-router-dom";
 import Loader from "../../components/PagesComponents/Loader/Loader";
 import UserFavoriteList from "../../components/UserComponents/UserFavoriteList/UserFavoriteList";
@@ -28,7 +29,7 @@ const MyFavoritesBiblesPage = () => {
         !favoriteBibles ? (
             <Loader />
         ) : (
-            <div>
+            <div className="favoriteBox">
                 <h1 className="detailTitle">My favorite Bibles</h1>
                 <hr />
                 <Container>
@@ -43,7 +44,7 @@ const MyFavoritesBiblesPage = () => {
                     </Row>
                     <hr />
                     <Link to="/profile">
-                        <Button className="finalReturnButton" variant="outline-secondary">
+                        <Button className="finalReturnButton" variant="warning">
                             Return
                         </Button>
                     </Link>

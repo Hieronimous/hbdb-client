@@ -1,3 +1,8 @@
+.detailBibleBox {
+    margin-bottom: 100vh;
+    margin-left: 150px;
+}
+
 .detailTitle {
     color: #F0E494;
     font-size: 55px;
@@ -12,12 +17,14 @@
 
 .detailText {
     background-color: #e4e4e4;
-    margin: 40px;
-    padding: 0px 60px 20px 100px;
+    padding: 0px 70px 20px 150px;
+    max-width: 100%;
+    margin: 40px 100px 100px 100px;
 }
 
 .specsTitle {
     color: #3c297b;
+    margin-bottom: 50px;
 }
 
 .Buttons:hover {
@@ -28,12 +35,44 @@
 .finalRetunButton {
     margin-bottom: 50px;
     margin-top: 0;
-    margin-left: 47%;
+    margin-left: 44%;
 }
 
 .Buttons {
     margin-left: 20px;
     margin-top: 30px;
+}
+
+.Subtitle {
+    margin-top: 90px;
+}
+
+.finalLink {
+    padding-top: 80px;
+}
+
+.collabImage {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.collabBy {
+
+    display: flex;
+    align-items: center;
+    justify-content: end
+}
 
 
+.collabBy1 {
+    font-size: 15px;
+}
+
+.collabBy2 {
+    margin: 0 10px 0 10px;
+    font-size: 20px;
+}
+
+.link {
+    text-decoration: none;
 }

@@ -76,8 +76,8 @@ const ProfileComponents = ({ user }) => {
                     <Row>
                         <Col md={{ span: 12 }} className="d-flex justify-content-center">
                             {user && <>
-                                <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
-                            <Button className="Buttons" variant="outline-light" as={Link} to={`/`}  >Return</Button>{' '}
+                                <Button className="Buttons" variant="outline-light" as={Link} onClick={handledelete}  >Delete profile</Button>{' '}</>}
+                            <Button className="Buttons" variant="secondary" as={Link} to={`/`}  >Return</Button>{' '}
                         </Col>
                     </Row>
                     <Row>
