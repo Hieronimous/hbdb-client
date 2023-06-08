@@ -1,0 +1,137 @@
+.carousel-section {
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 60px;
+}
+
+.section-2 {
+    padding: 50px 0;
+}
+
+.section-3 {
+    padding: 50px 0;
+}
+
+.section-3 img {
+    max-width: 100%;
+
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    margin-left: 20%;
+
+
+}
+
+.libraryCard {
+    width: 80%;
+    margin-top: 40px;
+}
+
+
+.text-center1 {
+    font-size: 35px;
+    color: #F0E494;
+    text-align: center;
+}
+
+.text-center2 {
+
+    font-size: 40px;
+    text-align: center;
+    color:
+}
+
+.threeCards {
+    margin-left: 5%;
+}
+
+.logoBox {
+    margin-top: 5%;
+}
+
+.logo1 {
+    height: 50%;
+
+}
+
+.logo2 {
+    height: 55%;
+}
+
+.logo3 {
+    height: 50%;
+}
+
+.logo4 {
+    height: 55%;
+}
+
+.logo5 {
+    height: 27%;
+}
+
+.logo6 {
+    height: 50%;
+}
+
+.logo7 {
+    height: 50%;
+}
+
+.logo8 {
+    height: 50%;
+}
+
+
+.card-container {
+    perspective: 1000px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+
+.card {
+    backface-visibility: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s, transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+    z-index: 2;
+    backface-visibility: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
+}

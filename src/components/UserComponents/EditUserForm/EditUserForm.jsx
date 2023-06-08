@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { Form, Button, Container, Col, Row } from "react-bootstrap"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import uploadServices from "../../../services/upload.services"
 import userService from "../../../services/user.services"
 import { AuthContext } from "../../../contexts/auth.context"
@@ -15,7 +15,7 @@ const UserEditForm = ({ }) => {
         username: '', email: '', firstName: '', lastName: '', userRole: '', avatar: '', currentInstitution: '', collaboratorDetail: ''
     })
     const { username, email, firstName, lastName, userRole, currentInstitution, collaboratorDetail } = userData
-    const roleSelect = ["", "Visitor", "Collaborator"]
+
 
     useEffect(() => {
         loadUser()
@@ -51,8 +51,6 @@ const UserEditForm = ({ }) => {
             })
             .catch(err => console.log(err))
     }
-
-    console.log(userRole)
 
     const handleFileUpload = event => {
 
@@ -120,22 +118,6 @@ const UserEditForm = ({ }) => {
                                                 <Form.Label>Email</Form.Label>
                                                 <Form.Control type="email" value={email} onChange={handleInputChange} name="email" />
                                             </Form.Group>
-                                            <Form.Group className="mb-3" controlId="userRole">
-                                                <Form.Label>Visitor/Collaborator</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    value={userRole[0]}
-                                                    onChange={handleInputChange}
-                                                    name="userRole"
-                                                    defaultValue="Visitor"
-                                                    required>
-                                                    {roleSelect.map((option, index) => (
-                                                        <option key={index} value={option}>
-                                                            {option}
-                                                        </option>
-                                                    ))}
-                                                </Form.Control>
-                                            </Form.Group>
 
                                             {userRole[0] === "Collaborator" && <>
                                                 <Form.Group className="mb-3" controlId="currentInstitution">
@@ -147,12 +129,14 @@ const UserEditForm = ({ }) => {
                                                     <Form.Label>About you</Form.Label>
                                                     <Form.Control type="text" as="textarea" rows={5} value={collaboratorDetail} placeholder="A brief introduction about your career" onChange={handleInputChange} name="collaboratorDetail" />
                                                 </Form.Group> </>}
-
                                             <div className='mb-4'>
                                                 <Button className="Buttons" variant="warning" type="submit" disable={loadingImage}> {loadingImage ? 'Loading...' : 'Edit Profile'}</Button>
                                             </div>
                                         </form>
                                     </div>
+                                    < Link to="/profile" >
+                                        <Button className="finalRetunButton" variant="outline-secondary" >Cancel</Button>
+                                    </Link >
                                 </div>
                             </Col>
                             <Col className='imageCol'>
@@ -167,6 +151,7 @@ const UserEditForm = ({ }) => {
                             </Col>
 
                         </Row>
+
                     </div>
                 </section>
             </Container>

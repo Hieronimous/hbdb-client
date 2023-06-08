@@ -12,10 +12,15 @@ const ProfilePage = () => {
     const [currentUser, setCurrentUser] = useState()
 
     useEffect(() => {
+        loadUser()
+    }, [])
+
+    const loadUser = () => {
         userService
             .getOneUser(user._id)
             .then(({ data }) => setCurrentUser(data))
-    }, [])
+            .catch(err => console.log(err))
+    }
 
     return (
         currentUser && <Container>

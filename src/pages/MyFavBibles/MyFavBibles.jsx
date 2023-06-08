@@ -7,15 +7,15 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/PagesComponents/Loader/Loader";
 import UserFavoriteList from "../../components/UserComponents/UserFavoriteList/UserFavoriteList";
 
-const MyFavoritesBiblesPage = () => {
+const MyFavoriteBiblesPage = () => {
     const [favoriteBibles, setFavoriteBibles] = useState([]);
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        user && getMyFavorites();
+        getMyFavorite();
     }, []);
 
-    const getMyFavorites = () => {
+    const getMyFavorite = () => {
         usersService
             .getOneUser(user._id)
             .then(({ data }) => {
@@ -54,4 +54,4 @@ const MyFavoritesBiblesPage = () => {
     );
 };
 
-export default MyFavoritesBiblesPage;
+export default MyFavoriteBiblesPage;

@@ -4,6 +4,7 @@ import userService from "../../../services/user.services";
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
+import { USER_DELETE_CONFIRM } from "../../../consts/user-messages-consts";
 import "./UserCard.css"
 
 const UserCard = ({ avatar, firstName, lastName, _id, loadUsers }) => {
@@ -23,7 +24,7 @@ const UserCard = ({ avatar, firstName, lastName, _id, loadUsers }) => {
     console.log(userData)
 
     const handledelete = event => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
+        const isConfirmed = window.confirm(USER_DELETE_CONFIRM);
         if (isConfirmed) {
 
             userService.deleteUser(userData._id)

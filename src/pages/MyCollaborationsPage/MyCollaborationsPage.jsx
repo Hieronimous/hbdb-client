@@ -1,4 +1,5 @@
 import { Container, Button, Row } from "react-bootstrap";
+import './MyCollaborationsPage.css'
 import biblesService from "../../services/bibles.services";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/auth.context";
@@ -18,6 +19,7 @@ const MyCollaborationsPage = () => {
     }, [])
 
     const loadBibles = () => {
+
         biblesService
             .getAllBibles()
             .then(({ data }) => {
@@ -39,19 +41,19 @@ const MyCollaborationsPage = () => {
                     <Button variant="outline-warning" >New entry</Button>
                 </Link>
                 <hr />
-                <Container>
+                <Container className="myCollaborations">
                     <Row xs={1} md={2} lg={4} className="g-4">
-                        {ownerBibles.length >= 1 ? (
+                        {ownerBibles.length ? (
                             ownerBibles.map(ownerBibles => {
                                 return <UserCollaborationsList ownerBibles={ownerBibles} loadBibles={loadBibles} />;
                             })
                         ) : (
-                            <h3>You don't have any collaborations yet</h3>
+                            <h3 >You don't have any collaborations yet</h3>
                         )}
                     </Row>
                     <hr />
                     < Link to="/profile" >
-                        <Button className="finalRetunButton" variant="outline-secondary" >return</Button>
+                        <Button className="finalRetunButton" variant="warning" >return</Button>
                     </Link >
                 </Container>
             </div>

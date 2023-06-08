@@ -2,20 +2,19 @@ import { Link } from "react-router-dom";
 import { Card, ListGroup, Button } from "react-bootstrap";
 import FavBible from "../FavBible/FavBible";
 import biblesService from '../../../services/bibles.services';
-import { useNavigate, } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
+import { BIBLE_DELETE_CONFIRM } from "../../../consts/user-messages-consts";
 
 import './BibleCard.css'
 
 const BibleCard = ({ image, title, bibliotheca, date, shelfmark, scriptGeoculturalArea, _id, owner, loadBibles, isFavorite }) => {
-    const navigate = useNavigate();
 
     const { user } = useContext(AuthContext)
 
     const handledelete = event => {
 
-        const isConfirmed = window.confirm('Are you sure you want to delete this Bible?');
+        const isConfirmed = window.confirm(BIBLE_DELETE_CONFIRM);
 
         if (isConfirmed) {
 

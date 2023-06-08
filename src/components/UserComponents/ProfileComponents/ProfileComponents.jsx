@@ -44,21 +44,24 @@ const ProfileComponents = ({ user }) => {
                             <h4><b>Email: </b>{user.email}</h4>
 
                             {user.userRole == "Collaborator" && <>
-                                <h4><b>Institution: </b>{user.currentInstitution}</h4>
-                                <hr /></>}
+                                {user.currentInstitution && <>
+                                    <h4><b>Institution: </b>{user.currentInstitution}</h4>
+                                    <hr /></>
+                                }</>}
                         </Col>
                         {user.userRole == "Collaborator" && <>
                             {!user.currentInstitution &&
-                                <h5>*Access to Edit my profile to complete your professional information</h5>
+                                <h5 className="completeInfo">*Access to "Edit my profile" to complete your professional information</h5>
                             }</>}
 
                     </Row>
                     <Row>
                         {user.userRole == "Collaborator" && <>
-                            <h4><b>More about me </b></h4>
-                            <hr />
-                            <h6>{user.collaboratorDetail}</h6>
-                            <hr /></>}
+                            {user.currentInstitution && <>
+                                <h4><b>More about me </b></h4>
+                                <hr />
+                                <h6>{user.collaboratorDetail}</h6>
+                                <hr /></>}</>}
 
                     </Row>
                     <Row>
@@ -67,7 +70,7 @@ const ProfileComponents = ({ user }) => {
                             {user.userRole == "Collaborator" && <>
                                 <Button className="Buttons" as={Link} to={`/new-entry`} variant="warning">New entry</Button>{' '}
                                 <Button className="Buttons" as={Link} to={`/mycollaborations`} variant="warning">My collaborations</Button>{' '}</>}
-                            <Button className="Buttons" as={Link} to={`/favorites`} variant="warning">Favorites Bibles</Button>{' '}
+                            <Button className="Buttons" as={Link} to={`/favorite`} variant="warning">Favorite Bibles</Button>{' '}
                             <Button className="Buttons" as={Link} to={`/editProfile/${user._id}`} variant="warning">Edit my profile</Button>{' '}
                             {user.userRole == "Admin" && <Button className="Buttons" as={Link} to={`/everybody`} variant="danger">All the users</Button>}
                         </Col>

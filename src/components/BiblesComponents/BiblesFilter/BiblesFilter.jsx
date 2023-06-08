@@ -30,7 +30,6 @@ const BiblesFilter = ({ queriesFilter, resetBibles }) => {
 
         biblesService
             .getAllBibles({ ...queries, page: currentPage })
-
             .then(({ data }) => {
                 setBibles(data.bibles)
                 setBiblesBackup(data.bibles)
@@ -38,7 +37,6 @@ const BiblesFilter = ({ queriesFilter, resetBibles }) => {
                 setTotalPages(data.totalPages)
                 setIsLoading(false)
             })
-
             .catch(err => console.log(err))
 
     }
@@ -66,11 +64,6 @@ const BiblesFilter = ({ queriesFilter, resetBibles }) => {
         setTotalPages(0);
     }
 
-    const handleOnChange = (event, page) => {
-        setCurrentPage(page)
-        setQueries({ ...queries, page: page })
-        queriesFilter(queries)
-    }
     return (
         <>
             {
@@ -95,9 +88,6 @@ const BiblesFilter = ({ queriesFilter, resetBibles }) => {
                                 :
                                 <p ></p>
                         }
-
-
-
                     </>
             }
         </>

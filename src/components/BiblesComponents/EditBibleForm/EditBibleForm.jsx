@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import uploadServices from '../../../services/upload.services'
 import data from './../../../assets/CountriesandCities.json'
+import * as BIBLES_CONSTS from './../../../consts/bibles-consts'
 
 const EditBibleForm = ({ }) => {
     const { bible_id } = useParams();
@@ -27,6 +28,10 @@ const EditBibleForm = ({ }) => {
         loadBible()
     }, [bible_id])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     const loadBible = () => {
         biblesService
             .getOneBible(bible_id)
@@ -43,10 +48,6 @@ const EditBibleForm = ({ }) => {
     );
 
     const [step, setStep] = useState(1);
-    const languagesSelect = ["", "hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Hebrew & Spanish", "Aramaic & vernacular", "Arabic"];
-    const formatSelect = ["", "Codex", "Scroll", "Fragment"];
-    const centurySelect = ["", "Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"];
-    const scriptGeoculturalAreaSelect = ["", "Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"];
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -63,7 +64,8 @@ const EditBibleForm = ({ }) => {
                 navigate(`/details/${bible_id}`);
             })
             .catch(err => console.log(err));
-    };
+    }
+
     const handleFileUpload = event => {
 
         const formData = new FormData()
@@ -79,8 +81,8 @@ const EditBibleForm = ({ }) => {
                 console.log(err)
                 setLoadingImage(false)
             })
-
     }
+
     const validateFields = () => {
         let requiredFields = [];
         let isValid = true;
@@ -144,7 +146,7 @@ const EditBibleForm = ({ }) => {
                                     <Form.Label>Format<p className='dot'>*</p></Form.Label>
                                     <Form.Control as="select" value={bibleData.format} onChange={handleInputChange} name="format" defaultValue='Codex' required>
                                         <option value="" disabled>Select</option>
-                                        {formatSelect.map((option, index) => (
+                                        {BIBLES_CONSTS.FORMAT_SELECT.map((option, index) => (
                                             <option key={index} value={option}>
                                                 {option}
                                             </option>
@@ -157,7 +159,7 @@ const EditBibleForm = ({ }) => {
                                     <Form.Label>Script Geocultural Area<p className='dot'>*</p></Form.Label>
                                     <Form.Control as="select" value={bibleData.scriptGeoculturalArea} onChange={handleInputChange} name="scriptGeoculturalArea" defaultValue="" required>
                                         <option value="" disabled>Select</option>
-                                        {scriptGeoculturalAreaSelect.map((option, index) => (
+                                        {BIBLES_CONSTS.GEOCULTURAL_SELECT.map((option, index) => (
                                             <option key={index} value={option}>
                                                 {option}
                                             </option>
@@ -170,7 +172,7 @@ const EditBibleForm = ({ }) => {
                                     <Form.Label>Century<p className='dot'>*</p></Form.Label>
                                     <Form.Control as="select" value={bibleData.century} onChange={handleInputChange} name="century" defaultValue="Unknown" required>
                                         <option value="" disabled>Select</option>
-                                        {centurySelect.map((option, index) => (
+                                        {BIBLES_CONSTS.CENTURY_SELECT.map((option, index) => (
                                             <option key={index} value={option}>
                                                 {option}
                                             </option>
@@ -202,7 +204,7 @@ const EditBibleForm = ({ }) => {
                                     <Form.Label>Language<p className='dot'>*</p></Form.Label>
                                     <Form.Control as="select" value={bibleData.language} placeholder='Select' onChange={handleInputChange} name="language" defaultValue='Hebrew' required>
                                         <option value="" disabled>Select</option>
-                                        {languagesSelect.map((option, index) => (
+                                        {BIBLES_CONSTS.LANGUAGE_SELECT.map((option, index) => (
                                             <option key={index} value={option}>
                                                 {option}
                                             </option>

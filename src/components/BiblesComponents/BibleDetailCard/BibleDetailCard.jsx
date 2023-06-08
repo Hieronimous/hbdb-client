@@ -1,11 +1,12 @@
 import { Button, Col, Row, Container, Tab, Tabs } from "react-bootstrap"
-import { Link, useC } from "react-router-dom"
+import { Link } from "react-router-dom"
 import './BibleDetailCard.css'
 import biblesService from '../../../services/bibles.services';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import userService from "../../../services/user.services";
+import { BIBLE_DELETE_CONFIRM } from "../../../consts/user-messages-consts";
 
 
 
@@ -36,7 +37,7 @@ const BibleDetailCard = ({ bible }) => {
     };
 
     const handledelete = event => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this Bible?');
+        const isConfirmed = window.confirm(BIBLE_DELETE_CONFIRM);
 
         if (isConfirmed) {
             biblesService
@@ -104,7 +105,7 @@ const BibleDetailCard = ({ bible }) => {
 
                     <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
 
-                        <Tab eventKey={2} title="Basic information">
+                        <Tab eventKey={1} title="Basic information">
 
                             <h2 className="Subtitle" >Identification</h2>
                             <hr />
@@ -135,11 +136,11 @@ const BibleDetailCard = ({ bible }) => {
                             {bible.contents && <hr />}
                             {bible.contents && <h6><strong>Contents: </strong> {bible.contents}</h6>}
                         </Tab>
-                        <Tab eventKey={3} title="Codicology">
-                            {(bible.measurements || bible.material || bible.numberOfFolios || bible.foliation || bible.foliation || bible.script
+                        <Tab eventKey={2} title="Codicology">
+                            {(bible.measurements || bible.material || bible.numberOfFolios || bible.foliation || bible.script
                                 || bible.textDistribution || bible.specialWritingFeatures || bible.textSpecialFeatures || bible.quireType || bible.catchwords
                                 || bible.quireSignatures || bible.ruling || bible.watermarks || bible.blankFolios) && <h2 className="Subtitle">Codicology</h2>}
-                            {(bible.measurements || bible.material || bible.numberOfFolios || bible.foliation || bible.foliation || bible.script
+                            {(bible.measurements || bible.material || bible.numberOfFolios || bible.foliation || bible.script
                                 || bible.textDistribution || bible.specialWritingFeatures || bible.textSpecialFeatures || bible.quireType || bible.catchwords
                                 || bible.quireSignatures || bible.ruling || bible.watermarks || bible.blankFolios) && <hr />}
                             {bible.measurements && <h6><strong>Measurements: </strong> {bible.measurements}</h6>}
@@ -164,9 +165,9 @@ const BibleDetailCard = ({ bible }) => {
                             {bible.decorationDetails && <h6><strong>Decoration details: </strong> {bible.decorationDetails}</h6>}
 
                         </Tab>
-                        <Tab eventKey={4} title="History">
-                            {(bible.binding || bible.conservation) && <h2 className="Subtitle">History</h2>}
-                            {(bible.binding || bible.conservation) && <hr />}
+                        <Tab eventKey={3} title="History">
+                            {(bible.binding || bible.conservation || bible.damageFolios || bible.mutilatedFolios || bible.provenance || bible.arrivalToLibrary || bible.ancientShelfmark || bible.laterAnnotations) && <h2 className="Subtitle">History</h2>}
+                            {(bible.binding || bible.conservation || bible.damageFolios || bible.mutilatedFolios || bible.provenance || bible.arrivalToLibrary || bible.ancientShelfmark || bible.laterAnnotations) && <hr />}
                             {bible.binding && <h6><strong>Binding: </strong> {bible.binding}</h6>}
                             {bible.conservation && <h6><strong>Conservation: </strong> {bible.conservation}</h6>}
                             {bible.damageFolios && <h6><strong>Damaged folios: </strong> {bible.damageFolios}</h6>}
@@ -189,7 +190,7 @@ const BibleDetailCard = ({ bible }) => {
                             {bible.locationCity && <h6><strong>Location City: </strong> {bible.locationCity}</h6>}
                         </Tab>
                         {bible.image !== "https://64.media.tumblr.com/bedc13d74c349face65439cf16de7a8f/151be060c4113eab-70/s540x810/60191aad838b237810f914edd596db73e807eded.pnj" &&
-                            <Tab eventKey={1} title="Image">
+                            <Tab eventKey={4} title="Image">
                                 <img className="detailImage" src={bible.image} style={{ width: '80%' }} alt="bibleImage" />
                             </Tab>}
                     </Tabs>

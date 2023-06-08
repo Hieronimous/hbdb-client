@@ -4,24 +4,25 @@ import userService from "../../../services/user.services";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/auth.context";
 import "./CollaboratorCard.css"
+import { USER_DELETE_CONFIRM } from "../../../consts/user-messages-consts";
 
 const CollaboratorCard = ({ avatar, firstName, lastName, currentInstitution, _id, loadCollaborators, loadUsers }) => {
     const { user } = useContext(AuthContext)
 
     const handledelete = event => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this your profile?');
+        const isConfirmed = window.confirm(USER_DELETE_CONFIRM);
         if (isConfirmed) {
 
             userService
                 .deleteUser(_id)
                 .then(() => {
-                    loadCollaborators()//arreglar, no recarga colaboradores
-                    loadUsers() //arreglar, no recarga colaboradores
+                    loadCollaborators()
+                    loadUsers()
                 })
                 .catch(err => console.log(err));
         }
     }
-    console.log(_id)
+
     return (
         <>
             <Card className="CollaboratorCard">
@@ -36,18 +37,14 @@ const CollaboratorCard = ({ avatar, firstName, lastName, currentInstitution, _id
                     <Row>
                         <Col className="d-flex justify-content-center">
 
-                            {user &&
-                                <Button className="Buttons" as={Link} to={`/collaboratorDetails/${_id}`} variant="outline-secondary" size="sm" >More about me</Button>
-
-                            }
+                            {user && <Button className="Buttons" as={Link} to={`/collaboratorDetails/${_id}`} variant="outline-secondary" size="sm" >More about me</Button>}
 
                         </Col>
                     </Row>
                     <Row>
                         <Col className="d-flex justify-content-center">
                             <div >
-                                {user.userRole == "Admin" && <>
-                                    <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete Collaborator</Button>{' '}</>}
+                                {user.userRole == "Admin" && <Button className="Buttons" variant="secondary" as={Link} onClick={handledelete}  >Delete Collaborator</Button>}
                             </div>
 
                         </Col>

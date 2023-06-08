@@ -17,7 +17,6 @@ const CollaboratorsListPage = () => {
         userService
             .getAllUsers()
             .then(({ data }) => {
-                console.log(data)
                 const collaborators = data.filter(user => user.userRole.includes("Collaborator"));
                 setCollaborators(collaborators);
             })

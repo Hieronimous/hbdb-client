@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Col, Row, Container, Accordion } from "react-bootstrap";
 import './BiblesOptions.css'
 import data from './../../../assets/CountriesandCities.json'
+import * as BIBLES_CONSTS from './../../../consts/bibles-consts'
 
 const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
 
@@ -36,7 +37,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
         const city = e.target.value;
         setSelectedCity(city);
         resetBibles();
-        getQueries({ locationCountry: selectedCountry, locationCity: city });
+        getQueries({ locationCity: city });
     };
 
     const handleOption = e => {
@@ -45,11 +46,6 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
         resetBibles();
         getQueries({ [id]: value });
     }
-
-    const languagesSelect = ["Hebrew", "Aramaic", "Hebrew & Aramaic", "Aramaic & Latin", "Hebrew & Latin", "Hebrew & vernacular", "Hebrew & Spanish", "Aramaic & vernacular", "Arabic"];
-    const formatSelect = ["Codex", "Scroll", "Fragment"];
-    const centurySelect = ["Unknown", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"];
-    const scriptGeoculturalAreaSelect = ["Unknown", "Sefarad", "Orient", "Ashkenaz", "Italy", "Byzantium", "Yemen", "Does not apply"];
 
     return (
         <div >
@@ -65,7 +61,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
                                             <Form.Label labelAlignment="left">Century</Form.Label>
                                             <Form.Control as="select" onChange={handleOption} name="century" required defaultValue=''>
                                                 <option value="" disabled>Select</option>
-                                                {centurySelect.map((option, index) => (
+                                                {BIBLES_CONSTS.CENTURY_SELECT.map((option, index) => (
                                                     <option key={index} value={option}>
                                                         {option}
                                                     </option>
@@ -78,7 +74,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
                                             <Form.Label labelAlignment="left">Format</Form.Label>
                                             <Form.Control as="select" onChange={handleOption} placeholder='Select' name="format" required defaultValue=''>
                                                 <option value="" disabled>Select</option>
-                                                {formatSelect.map((option, index) => (
+                                                {BIBLES_CONSTS.FORMAT_SELECT.map((option, index) => (
                                                     <option key={index} value={option}>
                                                         {option}
                                                     </option>
@@ -93,7 +89,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
                                             <Form.Label>Language</Form.Label>
                                             <Form.Control as="select" onChange={handleOption} placeholder='Select' name="language" required defaultValue=''>
                                                 <option value="" disabled>Select</option>
-                                                {languagesSelect.map((option, index) => (
+                                                {BIBLES_CONSTS.LANGUAGE_SELECT.map((option, index) => (
                                                     <option key={index} value={option}>
                                                         {option}
                                                     </option>
@@ -106,7 +102,7 @@ const BiblesOptions = ({ resetQueries, getQueries, resetBibles }) => {
                                             <Form.Label labelAlignment="left">Script Geocultural Area</Form.Label>
                                             <Form.Control as="select" onChange={handleOption} name="scriptGeoculturalArea" required defaultValue=''>
                                                 <option value="" disabled>Select</option>
-                                                {scriptGeoculturalAreaSelect.map((option, index) => (
+                                                {BIBLES_CONSTS.GEOCULTURAL_SELECT.map((option, index) => (
                                                     <option key={index} value={option}>
                                                         {option}
                                                     </option>

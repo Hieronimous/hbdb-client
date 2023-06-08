@@ -16,28 +16,28 @@ const EverybodyPage = () => {
     }, [])
 
     const loadCollaborators = () => {
+
         userService
             .getAllUsers()
             .then(({ data }) => {
-                console.log(data)
                 const collaborators = data.filter(user => user.userRole == "Collaborator");
-                setCollaborators(collaborators);
-
+                setCollaborators(collaborators)
             })
+            .catch(err => console.log(err));
     }
 
     useEffect(() => {
         loadUsers()
     }, [])
+
     const loadUsers = () => {
         userService
             .getAllUsers()
             .then(({ data }) => {
-                console.log(data)
                 const users = data.filter(user => user.userRole == "Visitor");
                 setUsers(users);
-
             })
+            .catch(err => console.log(err));
     }
 
     return (

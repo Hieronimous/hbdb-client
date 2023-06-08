@@ -23,16 +23,15 @@ const BiblesListPage = () => {
     }, [user])
 
     const loadBibles = () => {
-        biblesService
-            .getAllBibles()
+
+        biblesService.getAllBibles()
             .then(({ data }) => {
                 setBibles(data);
                 setBiblesBackup(data)
             })
             .catch(err => console.log(err))
 
-        userService
-            .getOneUser(user?._id)
+        userService.getOneUser(user?._id)
             .then(({ data }) => {
                 setFavBibles(data.favoriteBibles.map(bible => bible._id));
 
@@ -44,12 +43,22 @@ const BiblesListPage = () => {
         setBibles(biblesBackup)
     }
 
+    const handleScrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
-    const queriesFilter = queries => {
-        const key = Object.keys(queries)[0];
-        const value = Object.values(queries)[0];
 
+    const queriesFilter = (queries) => {
+
+        const key = Object.keys(queries)[0]
+        const value = Object.values(queries)[0]
+        console.log(queries, key, value)
         const filteredBibles = biblesBackup.filter(bible => {
+
+
             if (key === 'language') {
                 return bible.language === value;
             } else if (key === 'format') {
@@ -60,15 +69,14 @@ const BiblesListPage = () => {
                 return bible.locationCountry === value;
             } else if (key === 'locationCity') {
                 return bible.locationCity === value;
-            } else if (key === 'scripGeoculturalArea') {
-                return bible.scripGeoculturalArea === value;
+            } else if (key === 'scriptGeoculturalArea') {
+                return bible.scriptGeoculturalArea === value;
             }
             return false;
         });
 
         setBibles(filteredBibles);
     };
-
 
     const filterBibles = query => {
         const filteredBibles = biblesBackup.filter(bible => {
@@ -103,9 +111,17 @@ const BiblesListPage = () => {
                         <BibleList bibles={bibles} favBibles={favBibles} loadBibles={loadBibles} />
                     </Row>
                     <hr />
-                    < Link to="/" >
-                        <Button className="finalRetunButton" variant="outline-secondary" >return</Button>
-                    </Link >
+                    <Row>
+                        <Col>
+                            < Link to="/" >
+                                <Button className="finalRetunButton" variant="outline-secondary" >return</Button>
+                            </Link >
+                        </Col>
+
+                        <Col>
+                            <Button md={{ offset: 1 }} className="finalRetunButton " variant="outline-secondary" onClick={handleScrollToTop}>back to top</Button>
+                        </Col>
+                    </Row>
                 </Container>
             </div>
     )

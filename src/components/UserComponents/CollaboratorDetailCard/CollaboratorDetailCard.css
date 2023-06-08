@@ -3,10 +3,8 @@
     color: #F0E494;
 }
 
-
 .buttons {
     margin-top: 80px;
-
 
 }
 
@@ -18,4 +16,8 @@
     margin-top: 50px;
     padding-bottom: 100px;
     margin-bottom: 100vh;
+}
+
+.detailName {
+    color: #F0E494
 }

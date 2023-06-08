@@ -11,7 +11,7 @@ import PrivateRoute from './PrivateRoutes'
 import UserEditForm from '../components/UserComponents/EditUserForm/EditUserForm'
 import CollaboratorsListPage from '../pages/CollaboratorsPage/CollaboratorsPage'
 import MyCollaborationsPage from '../pages/MyCollaborationsPage/MyCollaborationsPage'
-import MyFavoritesBiblesPage from '../pages/MyFavBibles/MyFavBibles'
+import MyFavoriteBiblesPage from '../pages/MyFavBibles/MyFavBibles'
 import EverybodyPage from '../pages/EverybodyPage/EverybodyPage'
 import CollaboratorDetailPage from './../pages/CollaboratorDetailPage/CollaboratorDetailPage'
 
@@ -33,7 +33,7 @@ const AppRoutes = () => {
                 <Route path="/new-entry" element={<NewBiblePage />} />
                 <Route path="/editProfile/:user_id" element={<UserEditForm />} />
                 <Route path="/mycollaborations" element={<MyCollaborationsPage />} />
-                <Route path="/favorites" element={<MyFavoritesBiblesPage />} />
+                <Route path="/favorite" element={<MyFavoriteBiblesPage />} />
                 <Route path="/everybody" element={<EverybodyPage />} />
                 <Route path="/collaboratorDetails/:user_id" element={<CollaboratorDetailPage />} />
             </Route>
