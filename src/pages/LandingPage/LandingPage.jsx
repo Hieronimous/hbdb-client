@@ -13,21 +13,21 @@ const LandingPage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://64.media.tumblr.com/415a90aeec129f84a340291e4df4fd4b/273d709354fcb3d0-82/s2048x3072/e7ecc6ba59832812cf4550b0aa350552268f7b50.pnj"
+                            src="https://64.media.tumblr.com/9082a4a110e001b58155aeb32f0aa28d/fdfa931eb5d866d1-0c/s2048x3072/9678eef2b6a6d899e601016f31c4589cad721a04.pnj"
                             alt="First slide"
                         />
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://64.media.tumblr.com/5ea42363d081a75e21908da10ae08e03/273d709354fcb3d0-af/s2048x3072/59d6db1e6fdf308793afce2e4c8f3e27782a14b5.pnj"
+                            src="https://64.media.tumblr.com/cd190a84361ca245e0a7587567e5fd70/fdfa931eb5d866d1-c4/s2048x3072/1b1af5106f1d0dca06e6131cf9efbaa5bf468e6b.pnj"
                             alt="Second slide"
                         />
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://64.media.tumblr.com/8d2e118c00ed4c0a3517cfe746d20575/273d709354fcb3d0-5f/s2048x3072/9a5eefcaa9063d8ac109fa54d36fe33ef8290fa3.pnj"
+                            src="https://64.media.tumblr.com/768e48f3e42cebccc559cb98a510be0a/fdfa931eb5d866d1-4c/s2048x3072/b933c1a922a4f3eaa89a880c909d3d46bda76fcc.pnj"
                             alt="Third slide"
                         />
                     </Carousel.Item>
@@ -50,7 +50,8 @@ const LandingPage = () => {
                                             <Card.Title className='d-flex justify-content-center'>BNE</Card.Title>
                                         </Card.Body>
                                         <Card.Body className="card-back">
-                                            <Card.Text>It was founded by Felipe V at the end of 1711 and opened its doors in March 1712 as the Royal Public Library. By a royal privilege, precedent of the current legal deposit, the printers had to deposit a copy of the books printed in Spain. In 1836, the Library ceased to be the property of the crown and became dependent on the Ministry of the Interior, and received the name of the National Library for the first time.</Card.Text>
+                                            <Card.Text>Founded by Felipe V at the end of 1711 as the Royal Public Library. By a royal privilege the printers had to deposit a copy
+                                                of the books printed in Spain. In 1836, the Library separeted from the crown and became dependent on the Ministry of the Interior, and received the name of the National Library for the first time.</Card.Text>
                                         </Card.Body>
                                     </div>
                                 </Card>
@@ -82,7 +83,7 @@ const LandingPage = () => {
                                             <Card.Title className='d-flex justify-content-center'>Royal Palace Library</Card.Title>
                                         </Card.Body>
                                         <Card.Body className="card-back">
-                                            <Card.Text> The Royal Library served as a private library for the kings of the House of Bourbon since the arrival of Felipe V. This institution must be opposed by the term of Royal Public, with which what is now the National Library was distinguished from the Private. Both institutions had a common origin. Its definitive separation took place in 1836, the year in which the Real Pública passed into the hands of the State and to be managed by the Ministry of the Interior of the Kingdom.
+                                            <Card.Text> The Royal Library served as a private library for the kings of the House of Bourbon. ivate. In 1836 separated from the crow and passed to be managed by the Ministry of the Interior.
                                             </Card.Text>
                                         </Card.Body>
                                     </div>
